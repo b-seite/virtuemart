@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+
+    <!--update>
+        <name>vmpayment Standard</name>
+        <description>vmpayment Standard</description>
+        <element>paypal</element>
+         <type>plugin</type>
+        <folder>vmuserfield</folder>
+        <version>2.6.2</version>
+        <client>0</client>
+
+        <infourl title="VirtueMart URL">http://dev.virtuemart.net/attachments/download/XXX/plg_vmpayment_standard.${PHING.VM.RELEASE}.zip</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">http://dev.virtuemart.net/attachments/download/XXX/plg_vmpayment_standard.${PHING.VM.RELEASE}.zip</downloadurl>
+        </downloads>
+
+        <maintainer>VirtueMart Team</maintainer>
+        <maintainerurl>http://virtuemart.net</maintainerurl>
+        <targetplatform name="joomla" version="2.5" />
+    </update-->
+
+</updates>

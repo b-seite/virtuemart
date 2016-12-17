@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+    <update>
+        <name>VirtueMart AIO</name>
+        <description>VirtueMart AIO Component</description>
+        <element>com_virtuemart_allinone</element>
+        <type>component</type>
+        <version>3.0.8</version>
+        <infourl title="VirtueMart URL">http://virtuemart.net/news/latest-news/469-security-release-vm3-0-8</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">http://dev.virtuemart.net/attachments/download/942/com_virtuemart.3.0.8_ext_aio.zip</downloadurl>
+        </downloads>
+		<tags>
+	        <tag>stable</tag>
+	    </tags>
+        <maintainer>VirtueMart Team</maintainer>
+        <maintainerurl>http://virtuemart.net</maintainerurl>
+        <targetplatform name="joomla" version=".*" />
+    </update>
+
+</updates>
