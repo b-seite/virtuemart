@@ -30,20 +30,7 @@ defined('_JEXEC') or die();
  *
  */
 
-if(JVM_VERSION<3){
-	if(!interface_exists('JObservableInterface')){
-		interface JObservableInterface{
-
-		}
-	}
-
-	if(!interface_exists('JTableInterface')){
-		interface JTableInterface{
-
-		}
-	}
-}
-if(!class_exists('vObject')) require(VMPATH_ADMIN .DS. 'helpers' .DS. 'vobject.php');
+JLoader::register('vObject', __DIR__ . '/helpers/vobject.php');
 
 class VmTable extends vObject implements JObservableInterface, JTableInterface {
 
