@@ -127,16 +127,6 @@ AdminUIHelper::startAdminArea($this);
 				<td>
 					<?php echo $row->calcShoppersList; ?>
 				</td>
-				<?php /*				<td align="center">
-					<a href="#" onclick="return listItemTask('cb<?php echo $i;?>', 'toggle.calc_shopper_published')" title="<?php echo ( $row->calc_shopper_published == '1' ) ? vmText::_('COM_VIRTUEMART_YES') : vmText::_('COM_VIRTUEMART_NO');?>">
-						<?php echo JHtml::_('image.administrator', ((JVM_VERSION===1) ? '' : 'admin/') . ($row->calc_shopper_published ? 'tick.png' : 'publish_x.png')); ?>
-					</a>
-				</td>
-				<td align="center">
-					<a href="#" onclick="return listItemTask('cb<?php echo $i;?>', 'toggle.calc_vendor_published')" title="<?php echo ( $row->calc_vendor_published == '1' ) ? vmText::_('COM_VIRTUEMART_YES') : vmText::_('COM_VIRTUEMART_NO');?>">
-						<?php echo JHtml::_('image.administrator', ((JVM_VERSION===1) ? '' : 'admin/') . ($row->calc_vendor_published ? 'tick.png' : 'publish_x.png')); ?>
-					</a>
-				</td> */  ?>
 				<td>
 					<?php
 						echo vmJsApi::date( $row->publish_up, 'LC4',true);
@@ -147,12 +137,6 @@ AdminUIHelper::startAdminArea($this);
 							echo vmJsApi::date( $row->publish_down, 'LC4',true);
 					?>
 				</td>
-<?php /*				<td>
-					<?php echo $row->calc_amount_cond; ?>
-				</td>
-				<td>
-					<?php echo vmText::_($row->calc_amount_dimunit); ?>
-				</td> */  ?>
 				<td>
 					<?php echo vmText::_($row->calcCountriesList); ?>
 				</td>

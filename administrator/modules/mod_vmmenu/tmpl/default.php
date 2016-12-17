@@ -33,21 +33,14 @@ if ($vmComponentItems) {
 	if ($hideMainmenu) {
 		$class = "disabled";
 	}
-	if(JVM_VERSION<3){
-		$vmMenu='<ul id="menu">';
-		$vmMenu.='<li class="node '.$class.'"><a href="'.$vmComponentItems->link.'">'.$vmComponentItems->text.'</a>';
-	} else{
+	
 		$vmMenu='<ul id="vm-menu" class="nav '.$class.'" >';
 		$vmMenu.='<li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#">'.$vmComponentItems->text.'<span class="caret"></span></a>';
-	}
+	
 
 	if (!$hideMainmenu) {
 		if (!empty($vmComponentItems->submenu)) {
-			if(JVM_VERSION<3){
-				$vmMenu.='<ul>';
-			} else {
 				$vmMenu.='<ul class="dropdown-menu">';
-			}
 
 			foreach ($vmComponentItems->submenu as $sub) {
 				$vmMenu.='<li><a class="'.$sub->class.'" href="'.$sub->link.'">'.$sub->text.'</a></li>';

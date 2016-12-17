@@ -469,24 +469,17 @@ class VmViewAdmin extends JViewLegacy {
 
 		if($untoggleable) return $image;
 
-		if (JVM_VERSION < 3){
-			return ('<a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task .'\')" title="'. $action .'">'
-			. $image .'</a>');
-		} else {
-			$icon 	= $field ? 'publish' : 'unpublish';
+		
+		$icon 	= $field ? 'publish' : 'unpublish';
 			return ('<a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task .'\')" title="'. $action .'">'
 			. '<span class="icon-'.$icon.'"><span>' .'</a>');
-		}
+		
 
 
 	}
 
 	function gridPublished($name,$i) {
-		if (JVM_VERSION < 3){
-			$published = JHtml::_('grid.published', $name, $i );
-		} else {
-			$published = JHtml::_('jgrid.published', $name->published, $i );
-		}
+		$published = JHtml::_('jgrid.published', $name->published, $i );
 		return $published;
 	}
 
@@ -518,11 +511,8 @@ class VmViewAdmin extends JViewLegacy {
 		if (vmAccess::manager('core')) {
 			JToolBarHelper::divider();
 			$bar = JToolBar::getInstance('toolbar');
-			if(JVM_VERSION<3){
-				$bar->appendButton('Popup', 'lock', 'JCONFIG_PERMISSIONS_LABEL', 'index.php?option=com_config&amp;view=component&amp;component=com_virtuemart&amp;tmpl=component', 875, 550, 0, 0, '');
-			} else {
-				$bar->appendButton('Link', 'lock', 'JCONFIG_PERMISSIONS_LABEL', 'index.php?option=com_config&amp;view=component&amp;component=com_virtuemart');
-			}
+			$bar->appendButton('Link', 'lock', 'JCONFIG_PERMISSIONS_LABEL', 'index.php?option=com_config&amp;view=component&amp;component=com_virtuemart');
+			
 
 		}
 

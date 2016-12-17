@@ -527,14 +527,10 @@ class Migrator extends VmModel{
 		// 		$maxItems = 10;
 		$i=0;
 		$startLimit = 0;
-		$goForST = true;
-		if ( JVM_VERSION===1 ) {
-			$jUserArray = array('id','username','name','password','usertype','block','sendEmail','registerDate',
-			                    'lastvisitDate','activation','params' );
-		} else {
-			$jUserArray = array('id','username','name','password','block','sendEmail','registerDate',
+		
+		$jUserArray = array('id','username','name','password','block','sendEmail','registerDate',
 			                    'lastvisitDate','activation','params','lastResetTime','resetCount');
-		}
+		
 
 		$JUserString = '`p`.`'.implode('`,`p`.`',$jUserArray).'`';
 

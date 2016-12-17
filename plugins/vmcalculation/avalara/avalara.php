@@ -55,11 +55,8 @@ class plgVmCalculationAvalara extends vmCalculationPlugin {
 		$this->_tableId = 'id';
 		$this->_tablepkey = 'id';
 		$this->_tableId = 'id';
-		if (JVM_VERSION > 1) {
 			define ('VMAVALARA_PATH', JPATH_ROOT . DS . 'plugins' . DS . 'vmcalculation' . DS . 'avalara' );
-		} else {
-			define ('VMAVALARA_PATH', JPATH_ROOT . DS . 'plugins' . DS . 'vmcalculation' );
-		}
+		
 		define('VMAVALARA_CLASS_PATH', VMAVALARA_PATH . DS . 'classes' );
 
 		require(VMAVALARA_PATH.DS.'AvaTax.php');	// include in all Avalara Scripts

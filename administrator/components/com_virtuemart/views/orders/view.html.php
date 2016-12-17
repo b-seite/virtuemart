@@ -159,7 +159,6 @@ class VirtuemartViewOrders extends VmViewAdmin {
 			$this->assignRef('currentOrderStat', $_currentOrderStat);
 
 			/* Toolbar */
-			if (JVM_VERSION < 3) { $backward="back"; $list='back';} else {$backward='backward';$list='list';}
 			JToolBarHelper::custom( 'prevItem', $backward,'','COM_VIRTUEMART_ITEM_PREVIOUS',false);
 			JToolBarHelper::custom( 'nextItem', 'forward','','COM_VIRTUEMART_ITEM_NEXT',false);
 			JToolBarHelper::divider();

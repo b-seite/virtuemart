@@ -87,20 +87,20 @@ class VirtueMartModelRatings extends VmModel {
 		if(self::$_select === TRUE){
 			$collate= '';
 			$collateMb4= '';
-			if(JVM_VERSION>=3){
-				$c = JFactory::getConfig();
-				$db = JFactory::getDbo();
+			
+			$c = JFactory::getConfig();
+			$db = JFactory::getDbo();
 
-				$q = 'select COLLATION_NAME from information_schema.columns where TABLE_SCHEMA = "'.$c->get('db').'"
-				and TABLE_NAME = "'.str_replace('#__',$db->getPrefix(),'#__users').'"
-				and COLUMN_NAME = "name";';
-				$db->setQuery($q);
-				$r = $db->loadResult();
-				if($r){
-					$collate= 'COLLATE '.str_replace('mb4','',$r);
-					$collateMb4= 'COLLATE '.$r;
-				}
+			$q = 'select COLLATION_NAME from information_schema.columns where TABLE_SCHEMA = "'.$c->get('db').'"
+			and TABLE_NAME = "'.str_replace('#__',$db->getPrefix(),'#__users').'"
+			and COLUMN_NAME = "name";';
+			$db->setQuery($q);
+			$r = $db->loadResult();
+			if($r){
+				$collate= 'COLLATE '.str_replace('mb4','',$r);
+				$collateMb4= 'COLLATE '.$r;
 			}
+			
 			self::$_select = ' `u`.*,`pr`.*,`l`.`product_name`,`rv`.`vote`, IFNULL(`u`.`name` '.$collateMb4.', `pr`.`customer` '.$collate.') AS customer ';
 		}
 		return self::$_select;

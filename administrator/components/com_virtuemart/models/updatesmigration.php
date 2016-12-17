@@ -200,12 +200,8 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 			$db->execute();
 
 			//Create table of the plugin
-
-			if(JVM_VERSION!=1){
-				$url = '/plugins/vmshipment/weight_countries';
-			} else{
-				$url = '/plugins/vmshipment';
-			}
+			$url = '/plugins/vmshipment/weight_countries';
+			
 
 			if (!class_exists ('plgVmShipmentWeight_countries')) require(VMPATH_ROOT . DS . $url . DS . 'weight_countries.php');
 			$this->installPluginTable('plgVmShipmentWeight_countries','#__virtuemart_shipment_plg_weight_countries','Shipment Weight Countries Table');
@@ -224,11 +220,9 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 			$db->setQuery($q);
 			$db->execute();
 
-			if(JVM_VERSION!=1){
-				$url = '/plugins/vmpayment/standard';
-			} else{
-				$url = '/plugins/vmpayment';
-			}
+			
+			$url = '/plugins/vmpayment/standard';
+			
 			if (!class_exists ('plgVmPaymentStandard')) require(VMPATH_ROOT . DS . $url . DS . 'standard.php');
 			$this->installPluginTable('plgVmPaymentStandard','#__virtuemart_payment_plg_standard','Payment Standard Table');
 		}

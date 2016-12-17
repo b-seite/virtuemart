@@ -532,15 +532,8 @@ class VmHtml{
 			$color = '#' . $color;
 		}
 
-		// Including fallback code for HTML5 non supported browsers.
-		vmJsApi::jQuery();
 
-		if (JVM_VERSION > 1) {
 			$class = ' class="minicolors"';
-		} else {
-			$class = ' class="input-colorpicker"';
-			JHtml::_('script', 'system/html5fallback.js', false, true);
-		}
 
 		JHtml::_('behavior.colorpicker');
 

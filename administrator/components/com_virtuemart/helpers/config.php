@@ -72,16 +72,6 @@ class vmDefines {
 			}
 			$vmPathLibraries = JPATH_VM_LIBRARIES;
 
-			defined('WP_VERSION') or define ('WP_VERSION', 0);
-		} else {
-			defined ('JVM_VERSION') or define ('JVM_VERSION', 0);
-
-			//Todo ???? need to be checked
-			!defined ('WPINC') or define ('WP_VERSION', get_bloginfo('version'));
-
-			//defined ('VMPATH_ROOT') or define ('VMPATH_ROOT', dirname( __FILE__ ));
-
-			//defined('_JEXEC') or define('_JEXEC', 1);
 			$vmPathLibraries = VMPATH_ROOT .'/libraries';
 
 		}

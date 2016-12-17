@@ -76,26 +76,22 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 		$this->_pkey = $key;
 		$this->_pkeyForm = 'cid';
 
-		if(JVM_VERSION<3){
-			$this->_tbl_key = $key;
-			$this->_tbl_keys = array($key);
-		} else {
-			// Set the key to be an array.
-			if (is_string($key)){
-				$key = array($key);
-			} elseif (is_object($key)){
-				$key = (array) $key;
-			}
-
-			$this->_tbl_keys = $key;
-			$this->_tbl_key = $key[0];
-
-			if (count($key) == 1) {
-				$this->_autoincrement = true;
-			} else {
-				$this->_autoincrement = false;
-			}
+		// Set the key to be an array.
+		if (is_string($key)){
+			$key = array($key);
+		} elseif (is_object($key)){
+			$key = (array) $key;
 		}
+
+		$this->_tbl_keys = $key;
+		$this->_tbl_key = $key[0];
+
+		if (count($key) == 1) {
+			$this->_autoincrement = true;
+		} else {
+			$this->_autoincrement = false;
+		}
+		
 
 		// If we are tracking assets, make sure an access field exists and initially set the default.
 		if (property_exists($this, 'asset_id')){
@@ -107,12 +103,12 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 			$this->access = (int) JFactory::getConfig()->get('access');
 		}
 
-		if(JVM_VERSION>2){
-			// Implement JObservableInterface:
-			// Create observer updater and attaches all observers interested by $this class:
-			$this->_observers = new JObserverUpdater($this);
-			JObserverMapper::attachAllObservers($this);
-		}
+		
+		// Implement JObservableInterface:
+		// Create observer updater and attaches all observers interested by $this class:
+		$this->_observers = new JObserverUpdater($this);
+		JObserverMapper::attachAllObservers($this);
+		
 
 	}
 
@@ -1325,11 +1321,6 @@ class VmTable extends vObject implements JObservableInterface, JTableInterface {
 				}
 
 			}
-
-			//if (JVM_VERSION === 1) $this->$slugName = JFilterOutput::stringURLSafe($this->$slugName);
-			//else $this->$slugName = JApplication::stringURLSafe($this->$slugName);
-			//pro+#'!"§$%&/()=?duct-w-| ||cu|st|omfield-|str<ing>
-			//vmdebug('my slugName '.$slugName,$this->$slugName);
 
 			$this->$slugName = str_replace('-', ' ', $this->$slugName);
 			$this->$slugName = html_entity_decode($this->$slugName,ENT_QUOTES);

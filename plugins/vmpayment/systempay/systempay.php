@@ -20,12 +20,8 @@ defined ('_JEXEC') or die('Restricted access');
 if (!class_exists ('vmPSPlugin')) {
 	require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
 }
-if (JVM_VERSION > 1) {
+
 	define('JPATH_VMPAYMENTPLUGIN_SYSTEMPAY', JPATH_ROOT . DS . 'plugins' . DS . 'vmpayment' . DS . 'systempay');
-}
-else {
-	define('JPATH_VMPAYMENTPLUGIN_SYSTEMPAY', JPATH_ROOT . DS . 'plugins' . DS . 'vmpayment');
-}
 
 class plgVMPaymentSystempay extends vmPSPlugin {
 

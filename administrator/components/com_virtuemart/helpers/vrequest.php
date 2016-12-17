@@ -192,12 +192,12 @@ class vRequest {
 				$source = $_REQUEST;
 			} else if($source=='GET'){
 				$source = $_GET;
-				if(JVM_VERSION>2){
+				
 					$router = JFactory::getApplication()->getRouter();
 					$vars = $router->getVars();
 					if($router->getMode() and !empty($vars)){
 						$source = array_merge($_GET,$vars);
-					}
+					
 				}
 			} else if($source=='POST'){
 				$source = $_POST;
@@ -263,13 +263,13 @@ class vRequest {
 	
 	public static function getGet( $filter = FILTER_SANITIZE_SPECIAL_CHARS, $flags = FILTER_FLAG_ENCODE_LOW ){
 		$source = $_GET;
-		if(JVM_VERSION>2){
+		
 			$router = JFactory::getApplication()->getRouter();
 			$vars = $router->getVars();
 			if($router->getMode() and !empty($vars)){
 				$source = array_merge($_GET,$vars);
 			}
-		}
+		
 		return self::filter($source, $filter, $flags,true);
 	}
 	

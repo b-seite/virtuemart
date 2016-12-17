@@ -312,15 +312,15 @@ if (!defined('_VM_SCRIPT_INCLUDED')) {
 		}
 
 		private function deleteSwfUploader(){
-			if(JVM_VERSION>0){
-				if( JFolder::exists(VMPATH_ROOT. DS. 'media' .DS. 'system'. DS. 'swf')){
-					JFolder::delete(VMPATH_ROOT. DS. 'media' .DS. 'system'. DS. 'swf');
-				}
-				if( JFile::exists(VMPATH_ROOT. DS. 'administrator' .DS. 'language' .DS. 'en-GB'. DS. 'en-GB.com_virtuemart.sys.ini')){
-					JFile::delete(VMPATH_ROOT. DS. 'administrator' .DS. 'language' .DS. 'en-GB'. DS. 'en-GB.com_virtuemart.sys.ini');
-				}
-
+			
+			if( JFolder::exists(VMPATH_ROOT. DS. 'media' .DS. 'system'. DS. 'swf')){
+				JFolder::delete(VMPATH_ROOT. DS. 'media' .DS. 'system'. DS. 'swf');
 			}
+			if( JFile::exists(VMPATH_ROOT. DS. 'administrator' .DS. 'language' .DS. 'en-GB'. DS. 'en-GB.com_virtuemart.sys.ini')){
+				JFile::delete(VMPATH_ROOT. DS. 'administrator' .DS. 'language' .DS. 'en-GB'. DS. 'en-GB.com_virtuemart.sys.ini');
+			}
+
+			
 		}
 
 		private function isUpdateToVm3(){

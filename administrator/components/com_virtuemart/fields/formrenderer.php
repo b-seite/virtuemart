@@ -16,17 +16,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * http://virtuemart.net
  */
 
-if (JVM_VERSION < 3){
-	$control_field_class="width100 floatleft control-field";
-	$control_group_class="width100 control-group";
-	$control_label_class="width25 floatleft control-label";
-	$control_input_class="width74 floatright control-input";
-} else {
 	$control_field_class="control-field";
 	$control_group_class="control-group";
 	$control_label_class="control-label";
 	$control_input_class="control-input";
-}
 
 if ($form) {
 	$fieldSets = $form->getFieldsets();

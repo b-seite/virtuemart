@@ -72,12 +72,10 @@ if($option=='com_virtuemart'){
 			</td>
 		</tr>
 		<?php  if (vRequest::get('view','')=='install') {
-			if (JVM_VERSION < 3) {
-			$tag="strong";$style='style="color: #C00"';
-			} else {
+			
 				$tag="span";
 				$style = 'class="label label-warning"';
-			} ?>
+		?>
 			<tr>
 				<td>
 					<<?php echo $tag.' '.$style ?>>
@@ -96,11 +94,9 @@ if($option=='com_virtuemart'){
 		}
 		$class="";
 		if (vRequest::get('view','')=='install') {
-			if (JVM_VERSION < 3) {
-				$class = "button";
-			} else {
-				$class = "btn";
-			}
+			
+			$class = "btn";
+			
 		}
 		?>
 		<tr>

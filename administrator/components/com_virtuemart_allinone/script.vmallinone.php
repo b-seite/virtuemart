@@ -106,15 +106,9 @@ if (!defined ('_VM_AIO_SCRIPT_INCLUDED')) {
 					<?php echo JText::_('COM_VIRTUEMART_INSTALL_SAMPLE_DATA_TIP'); ?>
 				</p>
 				<div id="cpanel">
-					<?php
-					if (JVM_VERSION < 3) {
-						$class="button";
-					} else {
-						$class="btn btn-primary";
-					}
-					?>
+					
 					<div class="icon">
-						<a class="<?php echo $class ?>"
+						<a class="btn btn-primary"
 						   href="<?php echo JROUTE::_('index.php?option=com_virtuemart&view=updatesmigration&task=installSampleData&' . JSession::getFormToken() . '=1') ?>">
 							<?php echo JText::_('COM_VIRTUEMART_INSTALL_SAMPLE_DATA'); ?>
 						</a>

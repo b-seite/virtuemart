@@ -1324,11 +1324,9 @@ abstract class vmPSPlugin extends vmPlugin {
 				return false;
 			} else {
 				$cl = strtolower(get_class($unsunser));
-				if(JVM_VERSION<3){
-					$cld = 'jregistry';
-				} else {
-					$cld = 'joomla\registry\registry';
-				}
+				
+				$cld = 'joomla\registry\registry';
+				
 
 				if($cl != $cld){
 					$m = 'Wrong class in Session, check your installation, update your joomla

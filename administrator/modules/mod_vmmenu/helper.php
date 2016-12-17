@@ -74,11 +74,9 @@ abstract class ModVMMenuHelper {
 
 							$class = preg_replace('#\.[^.]*$#', '', basename($vmComponentItem->img));
 							$class = preg_replace('#\.\.[^A-Za-z0-9\.\_\- ]#', '', $class);
-							if(JVM_VERSION<3){
-								$vmComponentItem->class="icon-16-".$class;
-							} else {
+							
 								$vmComponentItem->class='';
-							}
+							
 							$result->submenu[] = & $vmComponentItem;
 						}
 					}

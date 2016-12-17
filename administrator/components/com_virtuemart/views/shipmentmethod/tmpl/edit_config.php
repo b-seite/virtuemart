@@ -18,17 +18,12 @@
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
-if (JVM_VERSION < 3){
-	$control_field_class="width100 floatleft control-field";
-	$control_group_class="width100 control-group";
-	$control_label_class="width25 floatleft control-label";
-	$control_input_class="width74 floatright control-input";
-} else {
+
 	$control_field_class="control-field";
 	$control_group_class="control-group";
 	$control_label_class="control-label";
 	$control_input_class="control-input";
-}
+
 if ($this->shipment->shipment_jplugin_id) {
 	?>
 	<h2 style="text-align: center;"><?php echo $this->shipment->shipment_name ?></h2>
