@@ -30,7 +30,7 @@ defined('_JEXEC') or die();
  *
  */
 
-JLoader::register('vObject', __DIR__ . '/helpers/vobject.php');
+JLoader::register('vObject', __DIR__ . '/vobject.php');
 
 class VmTable extends vObject implements JObservableInterface, JTableInterface {
 
