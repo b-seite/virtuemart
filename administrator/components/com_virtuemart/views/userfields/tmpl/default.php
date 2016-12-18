@@ -98,12 +98,11 @@ AdminUIHelper::startAdminArea($this);
 			// 	'<span class="hasTip" title="'. vmText::_('COM_VIRTUEMART_FIELDMANAGER_COREFIELD').'">'. $image .'</span>' :
 				
 			$editlink = JROUTE::_('index.php?option=com_virtuemart&view=userfields&task=edit&virtuemart_userfield_id=' . $row->virtuemart_userfield_id);
-			$required = $this->toggle($row->required, $i, 'toggle.required','tick.png','publish_x.png',$coreField );
-//			$published = JHtml::_('grid.published', $row, $i);
-			$published = $this->toggle($row->published, $i, 'toggle.published','tick.png','publish_x.png', $coreField);
-			$registration = $this->toggle($row->cart, $i, 'toggle.cart','tick.png','publish_x.png', $coreField);
-			$shipment = $this->toggle($row->shipment, $i, 'toggle.shipment','tick.png','publish_x.png', $coreField);
-			$account = $this->toggle($row->account, $i, 'toggle.account','tick.png','publish_x.png', $coreField);
+			$required = $this->toggle($row->required, $i, 'toggle.required','','',$coreField );
+			$published = $this->toggle($row->published, $i, 'toggle.published','','', $coreField);
+			$registration = $this->toggle($row->cart, $i, 'toggle.cart','','', $coreField);
+			$shipment = $this->toggle($row->shipment, $i, 'toggle.shipment','','', $coreField);
+			$account = $this->toggle($row->account, $i, 'toggle.account','','', $coreField);
 			$ordering = ($this->lists['filter_order'] == 'ordering');
 			$disabled = ($ordering ?  '' : 'disabled="disabled"');
 		?>
