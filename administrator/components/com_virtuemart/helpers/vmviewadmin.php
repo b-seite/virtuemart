@@ -471,8 +471,8 @@ class VmViewAdmin extends JViewLegacy {
 
 		
 		$icon 	= $field ? 'publish' : 'unpublish';
-			return ('<a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task .'\')" title="'. $action .'">'
-			. '<span class="icon-'.$icon.'"><span>' .'</a>');
+			$icon 	= $field ? 'publish' : 'unpublish';
+			return ('<a class="btn btn-micro active hasTooltip" href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task .'\')" title data-original-title="'. $action .'">' . '<span class="icon-'.$icon.'"><span>' .'</a>');
 		
 
 
