@@ -105,22 +105,23 @@ class VmHtml{
 			foreach ($passedArgs as $k => $v) {
 			    $args[] = &$passedArgs[$k];
 			}
+		$help="";
 		$lang =JFactory::getLanguage();
 		if($lang->hasKey($label.'_TIP')){
-			$label = '<span class="hasTip" title="'.htmlentities(vmText::_($label.'_TIP')).'">'.vmText::_($label).'</span>' ;
+			$labelHint = vmText::_($label.'_TIP');
+			$help = 'data-original-title="'.$labelHint.'"' ;
+
 		} //Fallback
 		else if($lang->hasKey($label.'_EXPLAIN')){
-			$label = '<span class="hasTip" title="'.htmlentities(vmText::_($label.'_EXPLAIN')).'">'.vmText::_($label).'</span>' ;
-		} else {
-			$label = vmText::_($label);
-		}
+			$labelHint = vmText::_($label.'_EXPLAIN');
+			$help = 'data-original-title="'.$labelHint.'"' ;
+		} 
 
-		$html = '
-		<tr>
-			<td class="key">
-				'.$label.'
-			</td>
-			<td>';
+		$labelText = vmText::_($label);
+
+		$html = '<div class="control-group">';
+		if($func[1]!='checkbox'){ $html .= '<label class="hasTooltip" '.$help.' for="'.$label.'">'.$labelText.'</label>'; }
+		else {$html .= '<label class="checkbox hasTooltip" '.$help.'">';}
 		if($func[1]=='radioList'){
 			$html .= '<fieldset class="checkboxes">';
 		}
@@ -130,8 +131,10 @@ class VmHtml{
 		if($func[1]=='radioList'){
 			$html .= '</fieldset>';
 		}
-		$html .= '</tr>';
+		if($func[1]=='checkbox'){ $html.= vmText::_($label).'</input></label>';}
+		$html .= '</div>';
 		return $html ;
+
 	}
 	/* simple value display */
 	static function value( $value ){
@@ -268,7 +271,7 @@ class VmHtml{
 		$id = str_replace(array('[', ']'), '', $id);
 
 		$baseIndent = str_repeat($options['format.indent'], $options['format.depth']++);
-		$html = $baseIndent . '<select' . ($id !== '' ? ' id="' . $id . '"' : '') . ' name="' . $name . '"' . $attribs . '>' . $options['format.eol']
+		$html = $baseIndent . '<select class="form-control"' . ($id !== '' ? ' id="' . $id . '"' : '') . ' name="' . $name . '"' . $attribs . '>' . $options['format.eol']
 			. self::options($data, $options) . $baseIndent . '</select>' . $options['format.eol'];
 		return $html;
 	}
@@ -532,8 +535,15 @@ class VmHtml{
 			$color = '#' . $color;
 		}
 
+		// Including fallback code for HTML5 non supported browsers.
+		vmJsApi::jQuery();
 
+		if (JVM_VERSION > 1) {
 			$class = ' class="minicolors"';
+		} else {
+			$class = ' class="input-colorpicker"';
+			JHtml::_('script', 'system/html5fallback.js', false, true);
+		}
 
 		JHtml::_('behavior.colorpicker');
 
@@ -572,8 +582,9 @@ class VmHtml{
 					$checked = 'checked="checked"';
 				}
 			}
+			$html .= '<label class="radio">';
 			$html .= '<input type="radio" name="'.$name.'" id="'.$name.$i.'" value="'.htmlspecialchars($key, ENT_QUOTES).'" '.$checked.' '.$extra." />\n";
-			$html .= '<label for="'.$name.$i++.'">'.$val."</label>".$separator."\n";
+			$html .= $val."</label>";
 		}
 
 		return $html;
@@ -609,7 +620,7 @@ class VmHtml{
 	 * @param string $name
 	 * @param string $value
 	 */
-	public static function input($name,$value,$class='class="inputbox"',$readonly='',$size='37',$maxlength='255',$more=''){
+	public static function input($name,$value,$class='class="nput-small"',$readonly='',$size='37',$maxlength='255',$more=''){
 		return '<input type="text" '.$readonly.' '.$class.' id="'.$name.'" name="'.$name.'" size="'.$size.'" maxlength="'.$maxlength.'" value="'.($value).'" />'.$more;
 	}
 
