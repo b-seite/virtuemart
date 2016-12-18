@@ -4,13 +4,13 @@
 	version="2.5"
 	client="administrator">
 	<name>VirtueMart Administrator Menu</name>
-    <creationDate>${PHING.VM.RELDATE}</creationDate>
+    <creationDate>September 20 2016</creationDate>
     <author>The VirtueMart Development Team</author>
     <authorEmail>max|at|virtuemart.net</authorEmail>
     <authorUrl>http://www.virtuemart.net</authorUrl>
     <copyright>Copyright (C) 2004-2013 Virtuemart Team. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>${PHING.VM.RELEASE}</version>
+    <version>3.0.18</version>
 	<description>MOD_VMMENU_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_vmmenu">mod_vmmenu.php</filename>
@@ -34,6 +34,6 @@
     </config>
     <updateservers>
         <!-- Note: No spaces or linebreaks allowed between the server tags -->
-        <server type="extension" name="VirtueMart3 MOD_VMENU Update Site"><![CDATA[http://virtuemart.net/releases/${PHING.VM.UPDATEFOLDER}/mod_vmmenu_update.xml]]></server>
+        <server type="extension" name="VirtueMart3 MOD_VMENU Update Site"><![CDATA[http://virtuemart.net/releases/vm3/mod_vmmenu_update.xml]]></server>
     </updateservers>
 </extension>
