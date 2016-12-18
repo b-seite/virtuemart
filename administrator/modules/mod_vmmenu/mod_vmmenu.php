@@ -19,25 +19,19 @@
 // no direct access
 defined('_JEXEC') or die;
 
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-if (!class_exists( 'VmConfig' )) {
-	$path = JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php';
-	if(file_exists($path)){
-		require($path);
-	} else {
-		$app = JFactory::getApplication();
-		$app->enqueueMessage('VirtueMart Administration module is still installed, please install VirtueMart again, or uninstall the module via the joomla extension manager');
+JLoader::register('VmConfig', JPATH_ADMINISTRATOR.'/components/com_virtuemart/helpers/config.php');
+
+if (!class_exists('VmConfig')) {
+	$app = JFactory::getApplication();
+		$app->enqueueMessage('VirtueMart Administration module is still installed, please install VirtueMart again, or uninstall the module via the joomla extension manager','warning');
 		return false;
-	}
 }
 
 $user		= JFactory::getUser();
 if ($user->guest) return;
 
 // Include the module helper classes.
-if (!class_exists('ModVMMenuHelper')) {
-	require dirname(__FILE__).'/helper.php';
-}
+JLoader::register('ModVMMenuHelper', __DIR__ . '/helper.php');
 
 // Get the authorised components and sub-menus.
 $vmComponentItems = ModVMMenuHelper::getVMComponent(true);
@@ -45,7 +39,8 @@ $vmComponentItems = ModVMMenuHelper::getVMComponent(true);
 // Initialise variables.
 $lang		= JFactory::getLanguage();
 
-$hideMainmenu	= vRequest::getInt('hidemainmenu')  ;
+$input   = JFactory::getApplication()->input;
+$hideMainmenu = !$input->getBool('hidemainmenu') ? false : true;
 
 // Render the module layout
 require JModuleHelper::getLayoutPath('mod_vmmenu', $params->get('layout', 'default'));
