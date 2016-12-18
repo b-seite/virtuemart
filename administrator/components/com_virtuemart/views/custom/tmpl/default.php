@@ -75,6 +75,10 @@ $customs = $this->customs->items;
 		foreach ($customs as $key => $custom) {
 
 			$checked = JHtml::_('grid.id', $i , $custom->virtuemart_custom_id,false,'virtuemart_custom_id');
+			
+			$is_admin_only = $this->toggle($custom->admin_only, $i,'toggle.admin_only');
+			$is_hidden = $this->toggle($custom->is_hidden, $i,'toggle.is_hidden');
+			$cart_attribute = $this->toggle($custom->is_cart_attribute, $i, 'toggle.cart','featured','unfeatured',TRUE );
 			if (!is_null($custom->virtuemart_custom_id))
 			{
 				$published = $this->gridPublished( $custom, $i );
@@ -103,13 +107,15 @@ $customs = $this->customs->items;
 				<td><?php echo JHtml::_('link', JRoute::_($link, FALSE), vmText::_($custom->custom_title), array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '.htmlentities($custom->custom_title))); ?></td>
 				<td><?php echo vmText::_($custom->custom_desc); ?></td>
 				<td><?php echo vmText::_($custom->field_type_display); ?></td>
-				<td><span class="vmicon vmicon-16-<?php echo $cartIcon ?>"></span></td>
-				<td>
-					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','toggle.admin_only')" title="<?php echo ($custom->admin_only ) ? vmText::_('COM_VIRTUEMART_YES') : vmText::_('COM_VIRTUEMART_NO');?>">
-					<span class="vmicon <?php echo ( $custom->admin_only  ? 'vmicon-16-checkin' : 'vmicon-16-bug' );?>"></span></a></td>
-				<td><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','toggle.is_hidden')" title="<?php echo ($custom->is_hidden ) ? vmText::_('COM_VIRTUEMART_YES') : vmText::_('COM_VIRTUEMART_NO');?>">
-					<span class="vmicon <?php echo ( $custom->is_hidden  ? 'vmicon-16-checkin' : 'vmicon-16-bug' );?>"></span></a></td>
-
+				<td class="center hidden-phone">
+					<?php echo $cart_attribute; ?>
+				</td>
+				<td class="center hidden-phone">
+					<?php echo $is_admin_only; ?>
+				</td>
+				<td class="center hidden-phone">
+					<?php echo $is_hidden; ?>
+				</td>
 					<?php
 					if(!empty($this->custom_parent_id)){
 					?>
