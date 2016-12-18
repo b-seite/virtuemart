@@ -18,7 +18,6 @@
 
 // no direct access
 defined('_JEXEC') or die;
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
 abstract class ModVMMenuHelper {
 
@@ -29,7 +28,15 @@ abstract class ModVMMenuHelper {
 		$user		= JFactory::getUser();
 
 		$db = JFactory::getDBO();
-
+		/*
+		$query = $db->getQuery(true);
+		
+		$query->select($db->quoteName(array(' m.id', 'm.title', 'm.alias', 'm.link', 'm.parent_id', 'm.img', 'e.element')))
+		->from($db->quoteName('#__menu', 'm'));
+		->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('m.component_id') . ' = ' . $db->quoteName('e.extension_id') . ')')
+		->where($db->quoteName('m.client_id') . ' = 1 AND ' . $db->quoteName('e.enabled') . ' = 1 AND ' . $db->quoteName('m.parent_id') . ' = 1 OR '. $db->quoteName('m.parent_id') . );
+$query->order($db->quoteName('m.lft'));
+*/
 		$q = 'SELECT m.id, m.title, m.alias, m.link, m.parent_id, m.img, e.element FROM `#__menu` as m
 				LEFT JOIN #__extensions AS e ON m.component_id = e.extension_id
 		         WHERE m.client_id = 1 AND e.enabled = 1 AND m.id > 1 AND e.element = \'com_virtuemart\'
@@ -42,12 +49,12 @@ abstract class ModVMMenuHelper {
 
 		$vmComponentItems = $db->loadObjectList();
 		$result = new stdClass();
-		if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php');
+		JLoader::register('VmConfig', JPATH_ADMINISTRATOR.'/components/com_virtuemart/helpers/config.php');
+		
 		VmConfig::loadConfig();
 
 		if ($vmComponentItems) {
 
-			if (!class_exists( 'VmConfig' )) require(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php');
 			VmConfig::loadJLang('com_virtuemart.sys');
 			// Parse the list of extensions.
 			foreach ($vmComponentItems as &$vmComponentItem) {
@@ -74,8 +81,7 @@ abstract class ModVMMenuHelper {
 
 							$class = preg_replace('#\.[^.]*$#', '', basename($vmComponentItem->img));
 							$class = preg_replace('#\.\.[^A-Za-z0-9\.\_\- ]#', '', $class);
-							
-								$vmComponentItem->class='';
+							$vmComponentItem->class='';
 							
 							$result->submenu[] = & $vmComponentItem;
 						}
