@@ -93,15 +93,15 @@ class VmViewAdmin extends JViewLegacy {
 		$view = vRequest::getCmd('view', vRequest::getCmd('controller','virtuemart'));
 
 		JToolBarHelper::divider();
-		if(vmAccess::manager($view.'.edit.state')){
-			JToolBarHelper::publishList();
-			JToolBarHelper::unpublishList();
+		if($showNew and vmAccess::manager($view.'.create')){
+			JToolBarHelper::addNew();
 		}
 		if(vmAccess::manager($view.'.edit')){
 			JToolBarHelper::editList();
 		}
-		if($showNew and vmAccess::manager($view.'.create')){
-			JToolBarHelper::addNew();
+		if(vmAccess::manager($view.'.edit.state')){
+			JToolBarHelper::publishList();
+			JToolBarHelper::unpublishList();
 		}
 		if($showDelete and vmAccess::manager($view.'.delete')){
 			JToolBarHelper::spacer('10');
@@ -443,10 +443,8 @@ class VmViewAdmin extends JViewLegacy {
 	 *
 	 * @return string HTML code to write the toggle button
 	 */
-	function toggle( $field, $i, $toggle, $imgY = 'tick.png', $imgX = 'publish_x.png', $untoggleable = false )
+	function toggle( $field, $i, $toggle, $imgY = '' , $imgX = '', $untoggleable = false )
 	{
-
-		$img 	= $field ? $imgY : $imgX;
 		if ($toggle == 'published') {
 			// Stay compatible with grid.published
 			$task 	= $field ? 'unpublish' : 'publish';
@@ -457,22 +455,23 @@ class VmViewAdmin extends JViewLegacy {
 			$alt 	= $field ? vmText::_('COM_VIRTUEMART_PUBLISHED') : vmText::_('COM_VIRTUEMART_DISABLED');
 			$action = $field ? vmText::_('COM_VIRTUEMART_DISABLE_ITEM') : vmText::_('COM_VIRTUEMART_ENABLE_ITEM');
 		}
-
-		$img = 'admin/' . $img;
-
-		if ($untoggleable) {
-			$attribs='style="opacity: 0.6;"';
+				
+		if ($imgX & $imgY) {
+			if ($field = 'publish') { 
+					$icon = $imgY;
+				} else {
+					$icon =$imgX;
+				}
 		} else {
-			$attribs='';
-		}
-		$image = JHtml::_('image', $img, $alt, $attribs, true);
-
-		if($untoggleable) return $image;
-
-		
 		$icon 	= $field ? 'publish' : 'unpublish';
-			$icon 	= $field ? 'publish' : 'unpublish';
-			return ('<a class="btn btn-micro active hasTooltip" href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task .'\')" title data-original-title="'. $action .'">' . '<span class="icon-'.$icon.'"><span>' .'</a>');
+		}
+		
+		if ($untoggleable) {
+			$html =  '<a class="btn btn-micro disabled hasTooltip" href="javascript:void(0);" title data-original-title="'. vmText::_('COM_VIRTUEMART_DISABLED') .'">' . '<span class="icon-'.$icon.'"><span>' .'</a>';
+		} else {
+			$html = '<a class="btn btn-micro active hasTooltip" href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task .'\')" title data-original-title="'. $action .'">' . '<span class="icon-'.$icon.'"><span>' .'</a>';
+		}
+		return $html;
 		
 
 
