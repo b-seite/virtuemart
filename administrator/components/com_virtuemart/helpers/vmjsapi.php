@@ -780,7 +780,7 @@ jQuery(document).ready(function($) {
 		$display  = '<input class="datepicker-db" id="'.$id.'" type="hidden" name="'.$name.'" value="'.$date.'" />';
 		$display .= '<input id="'.$id.'_text" class="datepicker" type="text" value="'.$formatedDate.'" />';
 		if ($resetBt) {
-			$display .= '<span class="vmicon vmicon-16-logout icon-nofloat js-date-reset"></span>';
+			$display .= '<button type="button" class="btn btn-default btn-micro js-date-reset"><span class="icon-delete" aria-hidden="true"></span></button>';
 		}
 
 		// If exist exit
