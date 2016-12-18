@@ -3,9 +3,7 @@
 /*#cpanel div.icon{margin:3px}*/
 .admin-content div.icon a {
 	display: block;
-	height: 93px !important;
 	height: 95px;
-	width: 118px !important;
 	width: 120px;
 	vertical-align: middle;
 	text-decoration : none;
@@ -15,9 +13,9 @@
 	-webkit-box-shadow:rgba(0, 0, 0, 0.148438) 0 1px 2px inset, #FFFFFF 0 1px 2px;
 	background-image: -moz-linear-gradient(100% 100% 90deg, #F8F8F8, #FFFFFF);
 	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#F1F1F1));
-
+	border-radius: 6px;
 	-webkit-border-radius: 6px;
--moz-border-radius: 6px;
+	-moz-border-radius: 6px;
 font-size: 12px;
 }
 .adminListHeader{height:48px;background-repeat:no-repeat;text-align:left;font-size:18px;font-weight:700;padding-left:80px}
@@ -113,4 +111,8 @@ ol.logline li {margin: 0 0 0 20px;padding: 5px 10px 5px 10px;list-style: decimal
 .vmLoadingDiv .vmLoadingDivMsg {
 	position: relative;
 	top: 50%;
+}
+
+#toolbar-popup-help {
+	float: right;
 }
