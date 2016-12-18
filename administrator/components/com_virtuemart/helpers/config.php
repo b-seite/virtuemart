@@ -1448,11 +1448,7 @@ class vmAccess {
 		$h = serialize($task).$uid;
 
 		if(!isset(self::$_manager[$h])) {
-			if(WP_VERSION){	//Atm for Wordpress
-				$u = wp_get_current_user();
-				self::$_manager[$h] = $u->has_cap('administrator');
-				return self::$_manager[$h];
-			}
+			
 			if($user->authorise('core.admin') or $user->authorise('core.admin', 'com_virtuemart')) {
 				self::$_manager[$h] = true;
 			} else {
