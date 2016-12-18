@@ -19,28 +19,27 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$show_vmmenu 	= $params->get('show_vmmenu', 1);
 $vmMenu="";
 $user = JFactory::getUser();
 $lang = JFactory::getLanguage();
-if ($show_vmmenu) {
-	$hideMainmenu=false;
-}
 
 // Check if there are any components, otherwise, don't render the menu
 if ($vmComponentItems) {
-	$class = '';
 	if ($hideMainmenu) {
-		$class = "disabled";
+		$vmMenu='<ul id="vm-menu" class="nav disabled" >';
+		$vmMenu.='<li class="disabled"><a class="no-dropdown" href="#">'.$vmComponentItems->text.'</a>';
 	}
-	
-		$vmMenu='<ul id="vm-menu" class="nav '.$class.'" >';
+	else
+	{
+		$vmMenu='<ul id="vm-menu" class="nav" >';
 		$vmMenu.='<li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#">'.$vmComponentItems->text.'<span class="caret"></span></a>';
-	
+	}
 
 	if (!$hideMainmenu) {
 		if (!empty($vmComponentItems->submenu)) {
-				$vmMenu.='<ul class="dropdown-menu">';
+			
+			$vmMenu.='<ul class="dropdown-menu">';
+			
 
 			foreach ($vmComponentItems->submenu as $sub) {
 				$vmMenu.='<li><a class="'.$sub->class.'" href="'.$sub->link.'">'.$sub->text.'</a></li>';
