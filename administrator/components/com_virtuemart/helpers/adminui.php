@@ -46,7 +46,7 @@ class AdminUIHelper {
 		$view = vRequest::getCmd('view','virtuemart');
 
 		if($view!='virtuemart'){
-			vmJsApi::css('chosen');
+			//vmJsApi::css('chosen');
 			vmJsApi::css('jquery.fancybox-1.3.4');
 			vmJsApi::css('ui/jquery.ui.all');
 		}
@@ -57,9 +57,10 @@ class AdminUIHelper {
 			vmJsApi::addJScript('fancybox/jquery.fancybox-1.3.4.pack',false,false);
 			VmJsApi::chosenDropDowns();
 		}
-
+		JHtml::_('formbehavior.chosen', 'select');
 		vmJsApi::addJScript('/administrator/components/com_virtuemart/assets/js/jquery.coookie.js');
 		vmJsApi::addJScript('/administrator/components/com_virtuemart/assets/js/vm2admin.js');
+		vmJsApi::addJScript('/media/system/js/tabs-state.js');
 
 		$vm2string = "editImage: 'edit image',select_all_text: '".vmText::_('COM_VIRTUEMART_DRDOWN_SELALL')."',select_some_options_text: '".vmText::_($selectText)."'" ;
 		vmJsApi::addJScript ('vm.remindTab', "
@@ -138,24 +139,21 @@ class AdminUIHelper {
 	 * @example 'shop' => 'COM_VIRTUEMART_ADMIN_CFG_SHOPTAB'
 	 */
 	static public function buildTabs($view, $load_template = array(),$cookieName='') {
-		$cookieName = vRequest::getCmd('view','virtuemart').$cookieName;
-
-		vmJsApi::addJScript ( 'vm.cookie', '
-		var virtuemartcookie="'.$cookieName.'";
-		');
-
-		$html = '<div id="admin-ui-tabs">';
-
+			
+		echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => key($load_template)));
+		
+		foreach ( $load_template as $tab_content => $tab_title ) {
+			echo JHtml::_('bootstrap.addTab', 'myTab', $tab_content, vmText::_ ( $tab_title )); 
+			echo $view->loadTemplate ( $tab_content );
+			echo JHtml::_('bootstrap.endTab');
+		}
+		
+		echo JHtml::_('bootstrap.endTabSet');
+		
 		$dispatcher = JDispatcher::getInstance();
 		$returnValues = $dispatcher->trigger('plgVmBuildTabs', array(&$view, &$load_template));
 
-		foreach ( $load_template as $tab_content => $tab_title ) {
-			$html .= '<div class="tabs" title="' . vmText::_ ( $tab_title ) . '">';
-			$html .= $view->loadTemplate ( $tab_content );
-			$html .= '<div class="clear"></div></div>';
-		}
-		$html .= '</div>';
-		echo $html;
+		
 	}
 
 
@@ -167,18 +165,13 @@ class AdminUIHelper {
 	 */
 	static function imitateTabs($return,$language = '') {
 		if ($return == 'start') {
-
-			vmJsApi::addJScript ( 'vm.cookietab','
-			var virtuemartcookie="vm-tab";
-			');
-			$html = 	'<div id="admin-ui-tabs">
-							<div class="tabs" title="'.vmText::_($language).'">';
-			echo $html;
+			echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'start'));
+			echo JHtml::_('bootstrap.addTab', 'myTab', $language, vmText::_($language));
+			
+			;
 		}
 		if ($return == 'end') {
-			$html = '		</div>
-						</div>';
-			echo $html;
+			echo JHtml::_('bootstrap.endTabSet');
 		}
 	}
 
