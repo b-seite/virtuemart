@@ -39,7 +39,7 @@ class VirtueMartModelShopperGroup extends VmModel {
 	function __construct() {
 		parent::__construct('virtuemart_shoppergroup_id');
 		$this->setMainTable('shoppergroups');
-
+		$this->setToggleName('sgrp_additional');
 	}
 
     /**
