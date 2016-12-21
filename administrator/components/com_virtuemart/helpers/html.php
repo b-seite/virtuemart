@@ -120,8 +120,11 @@ class VmHtml{
 		$labelText = vmText::_($label);
 
 		$html = '<div class="control-group">';
-		if($func[1]!='checkbox'){ $html .= '<label class="hasTooltip" '.$help.' for="'.$label.'">'.$labelText.'</label>'; }
-		else {$html .= '<label class="checkbox hasTooltip" '.$help.'">';}
+		$html .= '<div class="control-label">';
+							
+		if($func[1]!='checkbox'){ $html .= '<label class="hasPopover" '.$help.' id="'.$label.'" for="'.$label.'" data-original-title="'.$labelText.'">'.$labelText.'</label>'; }
+		else {$html .= '<label class="checkbox hasPopover '.$help.'"></label>';}
+		$html .= '</div><div class="controls">';
 		if($func[1]=='radioList'){
 			$html .= '<fieldset class="checkboxes">';
 		}
@@ -132,7 +135,7 @@ class VmHtml{
 			$html .= '</fieldset>';
 		}
 		if($func[1]=='checkbox'){ $html.= vmText::_($label).'</input></label>';}
-		$html .= '</div>';
+		$html .= '</div></div>';
 		return $html ;
 
 	}
@@ -609,8 +612,8 @@ class VmHtml{
 	 * @param string $value
 	 *
 	 */
-	public static function booleanlist (  $name, $value,$class='class="inputbox"'){
-		return '<fieldset class="radio">'.JHtml::_( 'select.booleanlist',  $name , $class , $value).'</fieldset>' ;
+	public static function booleanlist (  $name, $value, $class='class="inputbox"'){
+		return '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">'.JHtml::_( 'select.booleanlist',  $name , $class , $value).'</fieldset>' ;
 	}
 
 	/**
