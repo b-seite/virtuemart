@@ -51,84 +51,82 @@ AdminUIHelper::startAdminArea($this);
 	  <table class="adminlist table table-striped" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr>
-			<th class="admin-checkbox">
+			<th width ="1%" class="center">
 				<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
 			</th>
-			<th width="40%">
-				<?php echo vmText::_('COM_VIRTUEMART_SHOPPERGROUP_NAME'); ?>
-			</th>
-			<th width="60%">
-				<?php echo vmText::_('COM_VIRTUEMART_SHOPPERGROUP_DESCRIPTION'); ?>
-			</th>
-			<th width="40">
-				<?php echo vmText::_('COM_VIRTUEMART_DEFAULT'); ?>
-			</th>
-			<th width="30px" >
+			<th min-width="30px" class="nowrap center" >
 				<?php echo vmText::_('COM_VIRTUEMART_PUBLISHED'); ?>
 			</th>
-			<?php if((Vmconfig::get('multix','none')!='none') && $this->showVendors){ ?>
+			<th width="10%" class ="nowrap">
+				<?php echo vmText::_('COM_VIRTUEMART_SHOPPERGROUP_NAME'); ?>
+			</th>
 			<th>
+				<?php echo vmText::_('COM_VIRTUEMART_SHOPPERGROUP_DESCRIPTION'); ?>
+			</th>
+			
+			<?php if((Vmconfig::get('multix','none')!='none') && $this->showVendors){ ?>
+			<th width="1%" class="nowrap hidden-phone">
 				<?php echo vmText::_('COM_VIRTUEMART_VENDOR'); ?>
 			</th>
 			<?php } ?>
-			<th width="30px" >
+			<th width="1%" class="nowrap hidden-phone" >
 				<?php echo vmText::_('COM_VIRTUEMART_ADDITIONAL'); ?>
 			</th>
-			<th>
+			<th width="1%" class="nowrap hidden-phone">
 				<?php echo $this->sort('virtuemart_shoppergroup_id', 'COM_VIRTUEMART_ID')  ?>
 			</th>
 		  </tr>
 		</thead><?php
 
 		$k = 0;
-		for ($i = 0, $n = count( $this->shoppergroups ); $i < $n; $i++) {
-			$row = $this->shoppergroups[$i];
-			$published = $this->gridPublished( $row, $i );
-			$default = $this->toggle($row->default, $i, 'toggle.default','featured','unfeatured',TRUE );
-			$checked = '';
-			if ($row->default == 0) {
-				$checked = JHtml::_('grid.id', $i, $row->virtuemart_shoppergroup_id,null,'virtuemart_shoppergroup_id');
+		$i = 0;
+		foreach ($this->shoppergroups as $key => $shoppergroup) {
+			
+			
+			if ($shoppergroup->default == 0) {
+				$status = $this->gridPublished( $shoppergroup, $i );
+				$checked = JHtml::_('grid.id', $i, $shoppergroup->virtuemart_shoppergroup_id,null,'virtuemart_shoppergroup_id');
+			} else {
+				$status = $this->toggle($shoppergroup->default, $i, 'toggle.default','lock','unlock',TRUE );
+				$checked = '<input type="checkbox" disabled class="hasTooltip">';
 			}
 
-			$editlink = JROUTE::_('index.php?option=com_virtuemart&view=shoppergroup&task=edit&virtuemart_shoppergroup_id[]=' . $row->virtuemart_shoppergroup_id);
+			$editlink = JROUTE::_('index.php?option=com_virtuemart&view=shoppergroup&task=edit&virtuemart_shoppergroup_id[]=' . $shoppergroup->virtuemart_shoppergroup_id);
 
 			?>
 
 		  <tr class="row<?php echo $k ; ?>">
-			<td class="admin-checkbox">
+			<td class="center">
 				<?php echo $checked; ?>
 			</td>
-			<td align="left">
-			  <a href="<?php echo $editlink; ?>"><?php echo vmText::_($row->shopper_group_name); ?></a>
+			<td class="center">
+				<?php echo $status; ?>
 			</td>
-			<td align="left">
-				<?php echo vmText::_($row->shopper_group_desc); ?>
+			<td class="left">
+			  <a href="<?php echo $editlink; ?>"><?php echo vmText::_($shoppergroup->shopper_group_name); ?></a>
 			</td>
-			<td class="center hidden-phone">
-				<?php
-				echo $default;
-				?>
+			<td class="left">
+				<?php echo vmText::_($shoppergroup->shopper_group_desc); ?>
 			</td>
-			<td align="center">
-				<?php echo $published; ?>
-			</td>
+			
 			<?php if((Vmconfig::get('multix','none')!='none') && $this->showVendors){ ?>
-			<td align="left">
-				<?php echo $row->virtuemart_vendor_id; ?>
+			<td class="left">
+				<?php echo $shoppergroup->virtuemart_vendor_id; ?>
 			</td>
 			<?php } ?>
-			<td align="center">
+			<td class="center hidden-phone">
 				<?php 
-				if ($row->sgrp_additional == 1) {
+				if ($shoppergroup->sgrp_additional == 1) {
 					echo JHtml::_('image','menu/icon-16-apply.png', vmText::_('COM_VIRTUEMART_SHOPPERGROUP_ADDITIONAL'), NULL, true);
 				}
 				?>
 			</td>
-			<td align="left">
-				<?php echo $row->virtuemart_shoppergroup_id; ?>
+			<td class="left hidden-phone">
+				<?php echo $shoppergroup->virtuemart_shoppergroup_id; ?>
 			</td>
 		  </tr><?php
 			$k = 1 - $k;
+			$i++;
 		} ?>
 		<tfoot>
 		  <tr>
