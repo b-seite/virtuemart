@@ -86,11 +86,15 @@ AdminUIHelper::startAdminArea($this);
 			if ($shoppergroup->default == 0) {
 				$status = $this->gridPublished( $shoppergroup, $i );
 				$checked = JHtml::_('grid.id', $i, $shoppergroup->virtuemart_shoppergroup_id,null,'virtuemart_shoppergroup_id');
+				$isdefault = FALSE;
 			} else {
 				$status = $this->toggle($shoppergroup->default, $i, 'toggle.default','lock','unlock',TRUE );
 				$checked = '<input type="checkbox" disabled class="hasTooltip">';
+				$isdefault = TRUE;
 			}
-
+			
+			$is_additional = $this->toggle($shoppergroup->sgrp_additional, $i, 'toggle.sgrp_additional', '', '', $isdefault);
+			
 			$editlink = JROUTE::_('index.php?option=com_virtuemart&view=shoppergroup&task=edit&virtuemart_shoppergroup_id[]=' . $shoppergroup->virtuemart_shoppergroup_id);
 
 			?>
@@ -116,9 +120,7 @@ AdminUIHelper::startAdminArea($this);
 			<?php } ?>
 			<td class="center hidden-phone">
 				<?php 
-				if ($shoppergroup->sgrp_additional == 1) {
-					echo JHtml::_('image','menu/icon-16-apply.png', vmText::_('COM_VIRTUEMART_SHOPPERGROUP_ADDITIONAL'), NULL, true);
-				}
+					echo($is_additional);
 				?>
 			</td>
 			<td class="left hidden-phone">
