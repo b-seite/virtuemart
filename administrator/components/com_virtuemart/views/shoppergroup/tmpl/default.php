@@ -55,25 +55,25 @@ AdminUIHelper::startAdminArea($this);
 				<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
 			</th>
 			<th min-width="30px" class="nowrap center" >
-				<?php echo vmText::_('COM_VIRTUEMART_PUBLISHED'); ?>
+				<?php echo vmText::_('COM_VIRTUEMART_STATUS'); ?>
 			</th>
 			<th width="10%" class ="nowrap">
-				<?php echo vmText::_('COM_VIRTUEMART_SHOPPERGROUP_NAME'); ?>
+				<?php echo $this->sort('shopper_group_name','COM_VIRTUEMART_SHOPPERGROUP_NAME'); ?>
 			</th>
 			<th>
-				<?php echo vmText::_('COM_VIRTUEMART_SHOPPERGROUP_DESCRIPTION'); ?>
+				<?php echo $this->sort('shopper_group_desc','COM_VIRTUEMART_SHOPPERGROUP_DESCRIPTION'); ?>
 			</th>
 			
 			<?php if((Vmconfig::get('multix','none')!='none') && $this->showVendors){ ?>
 			<th width="1%" class="nowrap hidden-phone">
-				<?php echo vmText::_('COM_VIRTUEMART_VENDOR'); ?>
+				<?php echo $this->sort('virtuemart_vendor_id','COM_VIRTUEMART_VENDOR'); ?>
 			</th>
 			<?php } ?>
 			<th width="1%" class="nowrap hidden-phone" >
-				<?php echo vmText::_('COM_VIRTUEMART_ADDITIONAL'); ?>
+				<?php echo $this->sort('sgrp_additional','COM_VIRTUEMART_ADDITIONAL'); ?>
 			</th>
 			<th width="1%" class="nowrap hidden-phone">
-				<?php echo $this->sort('virtuemart_shoppergroup_id', 'COM_VIRTUEMART_ID')  ?>
+				<?php echo $this->sort('virtuemart_shoppergroup_id', 'COM_VIRTUEMART_ID');  ?>
 			</th>
 		  </tr>
 		</thead><?php
