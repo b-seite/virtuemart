@@ -113,6 +113,6 @@ ol.logline li {margin: 0 0 0 20px;padding: 5px 10px 5px 10px;list-style: decimal
 	top: 50%;
 }
 
-#toolbar-popup-help {
+#toolbar-popup-help, #toolbar-lock {
 	float: right;
 }

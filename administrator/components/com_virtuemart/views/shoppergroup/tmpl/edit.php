@@ -25,7 +25,7 @@ AdminUIHelper::imitateTabs('start', 'COM_VIRTUEMART_SHOPPERGROUP_NAME');
 ?>
 
 
-<form action="index.php" method="post" name="adminForm" id="adminForm">
+<form action="index.php" method="post" name="adminForm" id="adminForm" class="form-validate form-horizontal">
 
     <div class="col50">
 	<fieldset>

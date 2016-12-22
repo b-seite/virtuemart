@@ -39,7 +39,8 @@ class VirtueMartModelShopperGroup extends VmModel {
 	function __construct() {
 		parent::__construct('virtuemart_shoppergroup_id');
 		$this->setMainTable('shoppergroups');
-
+		$this->setToggleName('sgrp_additional');
+		$this->addvalidOrderingFieldName(array('shopper_group_name', 'shopper_group_desc', 'virtuemart_vendor_id', 'sgrp_additional', 'virtuemart_shoppergroup_id'));
 	}
 
     /**
@@ -69,8 +70,7 @@ class VirtueMartModelShopperGroup extends VmModel {
 		if($onlyPublished){
 			$query .= ' WHERE `published` = "1" ';
 		}
-		$query .= 'ORDER BY `virtuemart_vendor_id`,`shopper_group_name` ';
-
+		$query .= $this->_getOrdering();
 		if ($noLimit) {
 			$this->_data = $this->_getList($query);
 		}
