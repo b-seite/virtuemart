@@ -644,14 +644,9 @@ class VmHtml{
 	 * @param string $value
 	 *
 	 */
-<<<<<<< HEAD
-	public static function booleanlist (  $name, $value, $class='class="inputbox"'){
-		return '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">'.JHtml::_( 'select.booleanlist',  $name , $class , $value).'</fieldset>' ;
-=======
 	public static function booleanlist (  $name, $value, $class='class="inputbox"', $yes = 'JYES', $no = 'JNO', $id = false){
 		$value = array(JHtml::_('select.option', '0', JText::_($no)), JHtml::_('select.option', '1', JText::_($yes)));
 		return '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">'.VmHtml::radioList( $name, $value, $class, 'value', 'text', $yes, $no, $id ).'</fieldset>' ;
->>>>>>> 2bfca00d1616b82c0da98d5b016a49b528df8916
 	}
 
 	/**
