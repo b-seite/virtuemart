@@ -13,6 +13,8 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+use Joomla\Utilities\ArrayHelper;
+
 /**
  * HTML Helper
  *
@@ -120,8 +122,11 @@ class VmHtml{
 		$labelText = vmText::_($label);
 
 		$html = '<div class="control-group">';
-		if($func[1]!='checkbox'){ $html .= '<label class="hasTooltip" '.$help.' for="'.$label.'">'.$labelText.'</label>'; }
-		else {$html .= '<label class="checkbox hasTooltip" '.$help.'">';}
+		$html .= '<div class="control-label">';
+							
+		if($func[1]!='checkbox'){ $html .= '<label class="hasPopover" '.$help.' id="'.$label.'" for="'.$label.'" data-original-title="'.$labelText.'">'.$labelText.'</label>'; }
+		else {$html .= '<label class="checkbox hasPopover '.$help.'"></label>';}
+		$html .= '</div><div class="controls">';
 		if($func[1]=='radioList'){
 			$html .= '<fieldset class="checkboxes">';
 		}
@@ -132,7 +137,7 @@ class VmHtml{
 			$html .= '</fieldset>';
 		}
 		if($func[1]=='checkbox'){ $html.= vmText::_($label).'</input></label>';}
-		$html .= '</div>';
+		$html .= '</div></div>';
 		return $html ;
 
 	}
@@ -537,13 +542,8 @@ class VmHtml{
 
 		// Including fallback code for HTML5 non supported browsers.
 		vmJsApi::jQuery();
-
-		if (JVM_VERSION > 1) {
-			$class = ' class="minicolors"';
-		} else {
-			$class = ' class="input-colorpicker"';
-			JHtml::_('script', 'system/html5fallback.js', false, true);
-		}
+		
+		$class = ' class="minicolors"';
 
 		JHtml::_('behavior.colorpicker');
 
@@ -556,36 +556,71 @@ class VmHtml{
 
 
 	/**
-	 * Creates a Radio Input List
+	 * Generates an HTML radio list.
 	 *
-	 * @param string $name	 * @param string $value default value
-	 * @param string $arr
-	 * @param string $extra
-	 * @return string
+	 * @param   array    $data       An array of objects
+	 * @param   string   $name       The value of the HTML name attribute
+	 * @param   string   $attribs    Additional HTML attributes for the `<select>` tag
+	 * @param   mixed    $optKey     The key that is selected
+	 * @param   string   $optText    The name of the object variable for the option value
+	 * @param   string   $selected   The name of the object variable for the option text
+	 * @param   boolean  $idtag      Value of the field id or null by default
+	 * @param   boolean  $translate  True if options will be translated
+	 *
+	 * @return  string  HTML for the select list
+	 *
+	 * @since   1.5
 	 */
-	static function radioList($name, $value, &$arr, $extra="", $separator='<br />') {
-		$html = '';
-		if( empty( $arr ) ) {
-			$arr = array();
+	static function radiolist($name, $data, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
+		$translate = false)
+	{
+
+		if (is_array($attribs))
+		{
+			$attribs = ArrayHelper::toString($attribs);
 		}
+
+		$id_text = $idtag ? $idtag : $name;
+
 		$html = '';
-		$i = 0;
-		foreach($arr as $key => $val) {
-			$checked = '';
-			if( is_array( $value )) {
-				if( in_array( $key, $value )) {
-					$checked = 'checked="checked"';
+		
+		if( empty( $data ) ) {
+			$data = array();
+		}
+		foreach ($data as $obj)
+		{
+			$k = $obj->$optKey;
+			$t = $translate ? JText::_($obj->$optText) : $obj->$optText;
+			$id = (isset($obj->id) ? $obj->id : null);
+
+			$extra = '';
+			$id = $id ? $obj->id : $id_text . $k;
+
+			if (is_array($selected))
+			{
+				foreach ($selected as $val)
+				{
+					$k2 = is_object($val) ? $val->$optKey : $val;
+
+					if ($k == $k2)
+					{
+						$extra .= ' selected="selected" ';
+						break;
+					}
 				}
 			}
-			else {
-				if(strtolower($value) == strtolower($key) ) {
-					$checked = 'checked="checked"';
-				}
+			else
+			{
+				$extra .= ((string) $k == (string) $selected ? ' checked="checked" ' : '');
 			}
-			$html .= '<label class="radio">';
-			$html .= '<input type="radio" name="'.$name.'" id="'.$name.$i.'" value="'.htmlspecialchars($key, ENT_QUOTES).'" '.$checked.' '.$extra." />\n";
-			$html .= $val."</label>";
+
+			$html .= "\n\t" . '<label for="' . $id . '" id="' . $id . '-lbl" class="radio">';
+			$html .= "\n\t\n\t" . '<input type="radio" name="' . $name . '" id="' . $id . '" value="' . $k . '" ' . $extra
+				. $attribs . ' />' . $t;
+			$html .= "\n\t" . '</label>';
 		}
+
+		$html .= "\n";
 
 		return $html;
 	}
@@ -609,8 +644,9 @@ class VmHtml{
 	 * @param string $value
 	 *
 	 */
-	public static function booleanlist (  $name, $value,$class='class="inputbox"'){
-		return '<fieldset class="radio">'.JHtml::_( 'select.booleanlist',  $name , $class , $value).'</fieldset>' ;
+	public static function booleanlist (  $name, $value, $class='class="inputbox"', $yes = 'JYES', $no = 'JNO', $id = false){
+		$value = array(JHtml::_('select.option', '0', JText::_($no)), JHtml::_('select.option', '1', JText::_($yes)));
+		return '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">'.VmHtml::radioList( $name, $value, $class, 'value', 'text', $yes, $no, $id ).'</fieldset>' ;
 	}
 
 	/**
