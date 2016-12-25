@@ -571,8 +571,7 @@ class VmHtml{
 	 *
 	 * @since   1.5
 	 */
-	static function radiolist($name, $data, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
-		$translate = false)
+	static function radiolist($name, $data, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false, $translate = false)
 	{
 
 		if (is_array($attribs))
@@ -644,9 +643,12 @@ class VmHtml{
 	 * @param string $value
 	 *
 	 */
-	public static function booleanlist (  $name, $value, $class='class="inputbox"', $yes = 'JYES', $no = 'JNO', $id = false){
+	public static function booleanlist (  $name, $selected, $class='class="inputbox"', $yes = 'JYES', $no = 'JNO', $id = false){
+		
+		
 		$value = array(JHtml::_('select.option', '0', JText::_($no)), JHtml::_('select.option', '1', JText::_($yes)));
-		return '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">'.VmHtml::radioList( $name, $value, $class, 'value', 'text', $yes, $no, $id ).'</fieldset>' ;
+		
+		return '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">'.VmHtml::radioList( $name, $value, $class, 'value', 'text', (int) $selected, $id ).'</fieldset>' ;
 	}
 
 	/**
