@@ -55,7 +55,7 @@ AdminUIHelper::imitateTabs('start', 'COM_VIRTUEMART_SHOPPERGROUP_NAME');
 			echo VmHTML::row('textarea', 'COM_VIRTUEMART_SHOPPERGROUP_DESCRIPTION', 'shopper_group_desc', $this->shoppergroup->shopper_group_desc);
 
 			if ($this->shoppergroup->default < 1) {
-				echo VmHTML::row('checkbox', 'COM_VIRTUEMART_SHOPPERGROUP_ADDITIONAL', 'sgrp_additional', $this->shoppergroup->sgrp_additional);
+				echo VmHTML::row('booleanlist', 'COM_VIRTUEMART_SHOPPERGROUP_ADDITIONAL', 'sgrp_additional', $this->shoppergroup->sgrp_additional);
 			} else {
 				echo '<tr></tr>';
 			}
@@ -69,7 +69,7 @@ AdminUIHelper::imitateTabs('start', 'COM_VIRTUEMART_SHOPPERGROUP_NAME');
 	    <table class="admintable">
 			<?php
 			$attributes='id="show_prices"';
-			echo VmHTML::row('checkbox','COM_VIRTUEMART_SHOPPERGROUP_ENABLE_PRICE_DISPLAY', 'custom_price_display', $this->shoppergroup->custom_price_display,1,0,$attributes ); ?>
+			echo VmHTML::row('booleanlist','COM_VIRTUEMART_SHOPPERGROUP_ENABLE_PRICE_DISPLAY', 'custom_price_display', $this->shoppergroup->custom_price_display,1,0,$attributes ); ?>
 		</table>
 
         <?php
