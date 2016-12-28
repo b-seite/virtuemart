@@ -95,7 +95,7 @@ class VmHtml{
      * @args array : arguments
      * @return string: HTML code for row table
      */
-    static function row($func,$label){
+    static function row($func,$label,$id){
 		$VmHTML="VmHtml";
 		if (!is_array($func)) {
 			$func = array($VmHTML, $func);
@@ -111,12 +111,12 @@ class VmHtml{
 		$lang =JFactory::getLanguage();
 		if($lang->hasKey($label.'_TIP')){
 			$labelHint = vmText::_($label.'_TIP');
-			$help = 'data-original-title="'.$labelHint.'"' ;
+			$help = 'title data-content="'.$labelHint.'"' ;
 
 		} //Fallback
 		else if($lang->hasKey($label.'_EXPLAIN')){
 			$labelHint = vmText::_($label.'_EXPLAIN');
-			$help = 'data-original-title="'.$labelHint.'"' ;
+			$help = 'title data-content="'.$labelHint.'"' ;
 		} 
 
 		$labelText = vmText::_($label);
@@ -124,7 +124,7 @@ class VmHtml{
 		$html = '<div class="control-group">';
 		$html .= '<div class="control-label">';
 							
-		if($func[1]!='checkbox'){ $html .= '<label class="hasPopover" '.$help.' id="'.$label.'" for="'.$label.'" data-original-title="'.$labelText.'">'.$labelText.'</label>'; }
+		if($func[1]!='checkbox'){ $html .= '<label id="'.$id.'" for="'.$id.'" class="hasPopover" '.$help.'  data-original-title="'.$labelText.'">'.$labelText.'</label>'; }
 		else {$html .= '<label class="checkbox hasPopover '.$help.'"></label>';}
 		$html .= '</div><div class="controls">';
 		if($func[1]=='radioList'){
@@ -235,8 +235,7 @@ class VmHtml{
 	 *
 	 * @since   11.1
 	 */
-	public static function genericlist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
-									   $translate = false)
+	public static function genericlist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false, $translate = false)
 	{
 		// Set default options
 		$options = array_merge(JHtml::$formatOptions, array('format.depth' => 0, 'id' => false));
