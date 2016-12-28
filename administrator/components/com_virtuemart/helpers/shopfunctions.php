@@ -511,10 +511,10 @@ class ShopFunctions {
 				</td>
 
 				<td>' .
-				VmHTML::checkbox ($name, $array[$name]) . '
+				VmHTML::checkbox ('',$name, $array[$name]) . '
 				</td>
 				<td align="center">' .
-				VmHTML::checkbox ($name . 'Text', $array[$name . 'Text']) . '
+				VmHTML::checkbox ('',$name . 'Text', $array[$name . 'Text']) . '
 				</td>
 				<td align="center">
 				<input type="text" value="' . $array[$name . 'Rounding'] . '" class="inputbox" size="4" name="' . $name . 'Rounding">
