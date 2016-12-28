@@ -44,9 +44,9 @@ $i=0;
 				<input class="required inputbox" type="text" name="product_name" id="product_name" value="<?php echo $this->product->product_name; ?>" size="32" maxlength="255" />
 			</td>
 			<td colspan="2">
-				<label><?php echo VmHTML::checkbox('published', $this->product->published); ?><?php echo vmText::_('COM_VIRTUEMART_PUBLISHED') ?></label>
-				<label><?php echo VmHTML::checkbox('product_special', $this->product->product_special); ?> <?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_SPECIAL') ?></label>
-				<label><?php echo VmHTML::checkbox('product_discontinued', $this->product->product_discontinued); echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_DISCONTINUED') ?></label>
+				<label><?php echo VmHTML::checkbox('COM_VIRTUEMART_PUBLISHED','published', $this->product->published); ?></label>
+				<label><?php echo VmHTML::checkbox('COM_VIRTUEMART_PRODUCT_FORM_SPECIAL','product_special', $this->product->product_special); ?> </label>
+				<label><?php echo VmHTML::checkbox('COM_VIRTUEMART_PRODUCT_FORM_DISCONTINUED', 'product_discontinued', $this->product->product_discontinued); ?></label>
 			</td>
 			<td>
 				<span class="hastip" title="<?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_ALIAS_TIP');?>"><?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_ALIAS') ?></span>
