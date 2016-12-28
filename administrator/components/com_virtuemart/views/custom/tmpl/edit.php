@@ -17,10 +17,12 @@
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
+
 vmJsApi::JvalideForm();
 AdminUIHelper::startAdminArea($this);
+AdminUIHelper::imitateTabs('start', 'COM_VIRTUEMART_PRODUCT_CUSTOM_FIELD');
 ?>
-<form name="adminForm" id="adminForm" method="post" action="">
+<form action="index.php" method="post" name="adminForm" id="adminForm" class="form-validate form-horizontal">
     <fieldset>
 	<legend><?php echo vmText::_('COM_VIRTUEMART_PRODUCT_CUSTOM_FIELD'); ?></legend>
 	<?php
@@ -33,21 +35,14 @@ AdminUIHelper::startAdminArea($this);
 	$attribute_id = vRequest::getVar('attribute_id', '');
 	if (!empty($attribute_id))
 	    $this->customfields->addHidden('attribute_id', $attribute_id);
-	?>
-	<table class="admintable">
-	    <?php echo $this->displayCustomFields($this->custom); ?>
-
-	    <tr id="custom_plg">
-		<td valign="top"><?php echo vmText::_('COM_VIRTUEMART_SELECT_CUSTOM_PLUGIN') ?></td>
-		<td>
-		    <fieldset>
-			<?php if (!$this->custom->form) {
-				echo $this->pluginList;
-			} ?>
+	echo $this->displayCustomFields($this->custom); 
+	echo vmText::_('COM_VIRTUEMART_SELECT_CUSTOM_PLUGIN'); 
+	if (!$this->custom->form) {
+		echo $this->pluginList;
+	} ?>
 			<div class="clear"></div>
     			<div id="plugin-Container">
 				<?php
-				defined('_JEXEC') or die('Restricted access');
 
 				if ($this->custom->form) {
 
@@ -66,30 +61,10 @@ AdminUIHelper::startAdminArea($this);
 
     			</div>
     		    </fieldset>
-    		</td>
-    	    </tr>
-	    <?php //} ?>
-	</table>
-    </fieldset>
+    		    </fieldset>
 </form>
-<?php
-
-
-$js = "function submitbutton(pressbutton) {
-	if (pressbutton=='cancel'){
-        submitform(pressbutton);
-        return true;
-    }
-	if (jQuery('#adminForm').validationEngine('validate')== true){
-        submitform(pressbutton);
-        return true;
-    }
-	else return false ;
-}
-jQuery(function($) {";
-
-if (!$this->custom->form) {
-	$js .= "$('#custom_plg').hide();";
+<?php if (!$this->custom->form) {
+	$js = "$('#custom_plg').hide();";
 }
 $js .= '$(\'#field_type\').change(function () {
 	var $selected = $(this).val();
