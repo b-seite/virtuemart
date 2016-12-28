@@ -80,8 +80,9 @@ class VirtuemartViewCalc extends VmViewAdmin {
 
 			$currencyModel = VmModel::getModel('currency');
 			$this->currencies = $currencyModel->getCurrencies();
-
-			$this->shopperGroupList= ShopFunctions::renderShopperGroupList($calc->virtuemart_shoppergroup_ids,True);
+			
+			$shopperModel = VmModel::getModel ('shoppergroup');
+			$this->shopperGroupList= $shopperModel->getShopperGroups (FALSE, TRUE);
 
 			if (!class_exists ('ShopFunctionsF')) {
 				require(VMPATH_SITE . DS . 'helpers' . DS . 'shopfunctionsf.php');
@@ -155,7 +156,7 @@ class VirtuemartViewCalc extends VmViewAdmin {
 		);
 
 		$listHTML = JHtml::_('Select.genericlist', $entryPoints, 'calc_kind', '', 'calc_kind', 'calc_kind_name', $selected );
-		return $listHTML;
+		return $entryPoints;
 
 	}
 
@@ -186,7 +187,7 @@ class VirtuemartViewCalc extends VmViewAdmin {
 		$answer = $dispatcher->trigger('plgVmAddMathOp', array(&$mathOps));
 
 		$listHTML = JHtml::_('Select.genericlist', $mathOps, 'calc_value_mathop', 'style="width:70px;"', 'calc_value_mathop', 'calc_value_mathop_name', $selected );
-		return $listHTML;
+		return $mathOps;
 	}
 
 
