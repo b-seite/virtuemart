@@ -456,13 +456,13 @@ class VirtuemartViewProduct extends VmViewAdmin {
 							'price' => vmText::_('COM_VIRTUEMART_PRODUCT_LIST_SEARCH_BY_DATE_TYPE_PRICE'),
 							'withoutprice' => vmText::_('COM_VIRTUEMART_PRODUCT_LIST_SEARCH_BY_DATE_TYPE_WITHOUTPRICE')
 			);
-			$this->lists['search_type'] = VmHTML::selectList('search_type', $model->search_type,$options);
+			$this->lists['search_type'] = VmHTML::selectList('','search_type', $model->search_type,$options);
 
 			/* Search order */
 			$options = array( 	'bf' => vmText::_('COM_VIRTUEMART_PRODUCT_LIST_SEARCH_BY_DATE_BEFORE'),
 								'af' => vmText::_('COM_VIRTUEMART_PRODUCT_LIST_SEARCH_BY_DATE_AFTER')
 			);
-			$this->lists['search_order'] = VmHTML::selectList('search_order', $model->search_order,$options);
+			$this->lists['search_order'] = VmHTML::selectList('','search_order', $model->search_order,$options);
 
 			// Toolbar
 			$this->addStandardDefaultViewCommands();
