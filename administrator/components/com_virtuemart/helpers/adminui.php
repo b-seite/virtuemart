@@ -57,6 +57,9 @@ class AdminUIHelper {
 			vmJsApi::addJScript('fancybox/jquery.fancybox-1.3.4.pack',false,false);
 			VmJsApi::chosenDropDowns();
 		}
+		// Load tooltips behavior
+		JHtml::_('behavior.formvalidator');
+		JHtml::_('bootstrap.tooltip');
 		JHtml::_('formbehavior.chosen', 'select');
 		vmJsApi::addJScript('/administrator/components/com_virtuemart/assets/js/jquery.coookie.js');
 		vmJsApi::addJScript('/administrator/components/com_virtuemart/assets/js/vm2admin.js');
