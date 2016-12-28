@@ -1,4 +1,8 @@
 
+jQuery(document).ready(function($) { 
+	$(".hasPopover").popover({"html": true,"trigger": "hover focus","container": "body"}); 
+});
+
 if (typeof Virtuemart === "undefined")
     Virtuemart = {};
 
@@ -51,7 +55,8 @@ Virtuemart.sortable = jQuery(function($) {
 });
 
 (function ($) {
-
+	
+	
     var methods = {
 
         tabs:function (cookie) {
@@ -92,7 +97,8 @@ Virtuemart.sortable = jQuery(function($) {
             );
             return this;
         },
-        accordeon:function () {
+        
+             accordeon:function () {
             var idx = $.cookie('accordeon'),
                 options = { path:'/', expires:2},
                 div = this.children('div') ,
