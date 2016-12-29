@@ -102,7 +102,7 @@ class VmHtml{
 	 * @return string : HTML
 	 * @since 3.0.18
 	 */
-	static function getRowLabel($label,$id) {
+	static function getRowLabel($label,$id='') {
 		
 		$labelText = vmText::_($label);
 		$help = VmHtml::getTooltip($label);
@@ -112,8 +112,10 @@ class VmHtml{
 		}
 		$html = '<div class="control-group">';
 		$html .= '<div class="control-label">';
-							
-		$html .= '<label id="'.$id.'" for="'.$id.'" class="'.$class.'" '.$help.'  data-original-title="'.$labelText.'">'.$labelText.'</label>'; 
+		if (!$id == '') {
+			$id = 'id="'.$id.'" for="'.$id.'"';
+		} 			
+		$html .= '<label '.$id.' class="'.$class.'" '.$help.'  data-original-title="'.$labelText.'">'.$labelText.'</label>'; 
 		$html .= '</div><div class="controls">';
 		return $html;
 	}
@@ -156,18 +158,28 @@ class VmHtml{
 
 	}
 	/* simple value display */
-	static function value( $value ){
+	static function value( $label, $value, $class='class="inputbox"' ){
+		$html = VmHtml::getRowLabel($label);
+		
 		$lang =JFactory::getLanguage();
-		return $lang->hasKey($value) ? vmText::_($value) : $value;
-	}
+		$text = $lang->hasKey($value) ? vmText::_($value) : $value;
+		$html .=  '<input type="text" required="required" readonly="readonly" id="'.$label.'" value="'.$text.'" '.$class.'>';
+		$html .= '</div></div>';	
+		echo $html;
+		}
+		
 	/**
 	 * The sense is unclear !
 	 * @deprecated
 	 * @param $value
 	 * @return mixed
 	 */
-	static function raw( $dummy, $value ){
-		return $value;
+	static function raw( $label, $value ){
+		$html = VmHtml::getRowLabel($label);
+		$html .= $value;
+		$html .= '</div></div>';
+		
+		return $html;
 	}
     /**
      * Generate HTML code for a checkbox
@@ -413,8 +425,16 @@ class VmHtml{
 	 * @param string $default
 	 * @return string
 	 */
-	static function radio($label, $name, $radios, $default,$key='value',$text='text') {
-		return '<fieldset class="radio">'.JHtml::_('select.radiolist', $radios, $name, '', $key, $text, $default).'</fieldset>';
+	static function radio($label, $name, $radios, $default, $class='', $key='value',$text='text', $id = false) {
+		
+		$html = VmHtml::getRowLabel($label, $name);
+		$html .= '<fieldset id="'.$name.'" class="btn-group btn-group-yesno radio">';
+		$html .= VmHtml::radioList($label, $name, $radios, $class, $key, $text, $default, $id );
+		$html .= '</fieldset>';
+		$html .= '</div></div>';
+		return  $html;
+
+
 	}
 	/**
 	 * Creating rows with boolean list
@@ -445,9 +465,15 @@ class VmHtml{
 	 * @param string $name
 	 * @param string $value
 	 */
-	public static function input($label, $name, $value,$class='class="inputbox"',$readonly='',$size='37',$maxlength='255',$more=''){
+	public static function input($label, $name, $value,$class='class="form-control"',$readonly='',$size='37',$maxlength='255',$more=''){
 		$html = VmHtml::getRowLabel($label, $name);
-		$html .= '<input type="text" '.$readonly.' '.$class.' id="'.$name.'" name="'.$name.'" size="'.$size.'" maxlength="'.$maxlength.'" value="'.($value).'" />'.$more;
+		if ( !$more == '') { 
+			$html .= '<div class="input-append">';
+		} 
+		$html .= '<input type="text" '.$readonly.' '.$class.' id="'.$name.'" name="'.$name.'" size="'.$size.'" maxlength="'.$maxlength.'" value="'.($value).'" />';
+		if ( !$more == '') {
+			$html .= '<span class="add-on">'.$more.'</span> </div>';
+		}
 		$html .= '</div></div>';
 		return  $html;
 
