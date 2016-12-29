@@ -167,7 +167,7 @@ class VirtuemartViewCustom extends VmViewAdmin {
 			$filename = 'plg_' .strtolower ( $result['name']).'.sys';
 			vmPlugin::loadJLang($filename,'vmcustom',$result['name']);
 		}
-		return VmHTML::select( 'custom_jplugin_id', $results, $selected,"",$ext_id, 'name');
+		return VmHTML::select( '','custom_jplugin_id', $results, $selected,"",$ext_id, 'name');
 
 		//return JHtml::_('select.genericlist', $result, 'custom_jplugin_id', null, $ext_id, 'name', $selected);
 	}
