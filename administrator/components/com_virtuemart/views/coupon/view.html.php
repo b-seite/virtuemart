@@ -46,7 +46,7 @@ class VirtuemartViewCoupon extends VmViewAdmin {
 		$model = VmModel::getModel();
 
 		$coupon = $model->getCoupon();
-		$this->SetViewTitle('', $coupon->coupon_code);
+		$this->SetViewTitle('', $coupon->coupon_code, 'cube');
 
 
 		$layoutName = vRequest::getCmd('layout', 'default');
