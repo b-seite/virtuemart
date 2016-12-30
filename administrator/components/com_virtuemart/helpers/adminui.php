@@ -48,14 +48,14 @@ class AdminUIHelper {
 		if($view!='virtuemart'){
 			//vmJsApi::css('chosen');
 			vmJsApi::css('jquery.fancybox-1.3.4');
-			vmJsApi::css('ui/jquery.ui.all');
+			//vmJsApi::css('ui/jquery.ui.all');
 		}
 
 		if($view!='virtuemart') {
 			vmJsApi::addJScript('fancybox/jquery.mousewheel-3.0.4.pack',false,false);
 			vmJsApi::addJScript('fancybox/jquery.easing-1.3.pack',false,false);
 			vmJsApi::addJScript('fancybox/jquery.fancybox-1.3.4.pack',false,false);
-			VmJsApi::chosenDropDowns();
+			//VmJsApi::chosenDropDowns();
 		}
 		// Load tooltips behavior
 		JHtml::_('behavior.formvalidator');
