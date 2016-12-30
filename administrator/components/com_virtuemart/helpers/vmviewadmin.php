@@ -390,11 +390,11 @@ class VmViewAdmin extends JViewLegacy {
 		$view = vRequest::getCmd('view', vRequest::getCmd('controller'));
 		if ($name == '')
 			$name = strtoupper($view);
-		if ($icon == '')
-			$icon = strtolower($view);
 		if (!$task = vRequest::getCmd('task'))
 			$task = 'list';
-
+		if ($icon == '')
+			$icon = 'head vm_' . strtolower($view). '_48';
+		
 		if (!empty($msg)) {
 			$msg = ' <span style="color: #666666; font-size: large;">' . $msg . '</span>';
 		}
@@ -403,7 +403,7 @@ class VmViewAdmin extends JViewLegacy {
 
 		$taskName = ' <small><small>[ ' . vmText::_('COM_VIRTUEMART_' . $task) . ' ]</small></small>';
 
-		JToolBarHelper::title($viewText . ' ' . $taskName . $msg, 'head vm_' . $icon . '_48');
+		JToolBarHelper::title($viewText . ' ' . $taskName . $msg, $icon.' '.$task );
 		$this->assignRef('viewName',$viewText); //was $viewName?
 		$app = JFactory::getApplication();
 		$doc = JFactory::getDocument();
