@@ -107,6 +107,10 @@ class VirtuemartViewCoupon extends VmViewAdmin {
 			$this->pagination = $model->getPagination();
 
 		}
+			//JToolBarHelper
+			//$bar = JToolbar::getInstance('toolbar');
+			//echo '<div class="toolbar-box" style="height: 84px;position: relative;">' . $bar->render().'</div>';
+		
 
 		parent::display($tpl);
 	}
