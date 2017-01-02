@@ -19,11 +19,16 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-AdminUIHelper::startAdminArea($this);
+// AdminUIHelper::startAdminArea($this);
 
 ?>
 
 <form action="index.php?option=com_virtuemart&view=coupon" method="post" name="adminForm" id="adminForm">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo JLayoutHelper::render('sidemenu'); ?>
+	</div>
+	<div id="j-main-container" class="span10">
+
 	<div id="header">
 		<div id="filterbox">
 			<table>
@@ -134,6 +139,7 @@ AdminUIHelper::startAdminArea($this);
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="boxchecked" value="0" />
     <?php echo JHtml::_( 'form.token' ); ?>
+	</div>
 </form>
 
 
