@@ -35,7 +35,7 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
 		/** @var string Timezone */
 		static $RELTZ = '${PHING.VM.RELTZ}';
 		/** @var string Revision */
-		static $REVISION = '${PHING.VM.REVISION}';
+		static $REVISION = '3.0.18';
 		/** @var string Copyright Text */
 		static $COPYRIGHT = '${PHING.VM.COPYRIGHT}';
 		/** @var string URL */
