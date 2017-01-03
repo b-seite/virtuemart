@@ -585,7 +585,7 @@ class VmConfig {
 	public static $jLangCount = 1;
 	public static $langCount = 0;
 
-	public static $mType = 'info';
+	public static $mType = 'notice';
 	var $_params = array();
 	var $_raw = array();
 	public static $installed = false;
@@ -604,11 +604,7 @@ class VmConfig {
 		//But 15 has the best precision, using higher precision adds fantasy numbers to the end, but creates also errors in rounding
 		ini_set('serialize_precision',16);
 
-		if(JVM_VERSION<3){
-			self::$mType = 'info';
-		} else {
-			self::$mType = 'notice';
-		}
+		
 
 	}
 
@@ -1314,14 +1310,7 @@ class VmConfig {
 		return vmVersion::$RELEASE.' '.vmVersion::$CODENAME.' '.vmVersion::$REVISION;
 	}
 
-	/**
-	 * Return if the used joomla function is j15
-	 * @deprecated use JVM_VERSION instead
-	 */
-	function isJ15(){
-		return (strpos(JVERSION,'1.5') === 0);
-	}
-
+	
 	static public function isSuperVendor($uid = 0){
 		return vmAccess::isSuperVendor($uid);
 	}
