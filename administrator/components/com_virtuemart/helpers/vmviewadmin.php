@@ -224,8 +224,9 @@ class VmViewAdmin extends JViewLegacy {
 
 		JToolBarHelper::divider();
 		if (vmAccess::manager($view.'.edit')) {
-			JToolBarHelper::save();
 			JToolBarHelper::apply();
+			JToolBarHelper::save();
+			
 		}
 		JToolBarHelper::cancel();
 		self::showHelp();
@@ -401,7 +402,7 @@ class VmViewAdmin extends JViewLegacy {
 
 		$viewText = vmText::_('COM_VIRTUEMART_' . strtoupper($name));
 
-		$taskName = ' <small><small>[ ' . vmText::_('COM_VIRTUEMART_' . $task) . ' ]</small></small>';
+		$taskName = ' <small> < VirtueMart ' .  vmVersion::$REVISION . ' ></small>';
 
 		JToolBarHelper::title($viewText . ' ' . $taskName . $msg, $icon.' '.$task );
 		$this->assignRef('viewName',$viewText); //was $viewName?
