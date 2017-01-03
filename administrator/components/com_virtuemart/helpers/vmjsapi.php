@@ -298,8 +298,6 @@ class vmJsApi{
 
 		self::jQueryUi();
 
-		self::addJScript( 'jquery.noconflict',false,false,true,false,'');
-
 		self::vmVariables();
 
 		return TRUE;
@@ -310,9 +308,9 @@ class vmJsApi{
 		if(VmConfig::get('google_jquery', false)){
 			self::addJScript('jquery-ui.min', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js', false, false, false, '1.9.2');
 		} else {
-			self::addJScript('jquery-ui.min', false, false, false, false,'1.9.2');
-		}
-		self::addJScript('jquery.ui.autocomplete.html', false, false, false, false,'');
+			JHtml::_('jquery.ui');		
+			}
+		// self::addJScript('jquery.ui.autocomplete.html', false, false, false, false,'');
 	}
 
 	static function vmVariables(){
