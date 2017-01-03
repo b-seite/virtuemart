@@ -1,6 +1,15 @@
 
 jQuery(document).ready(function($) { 
-	$(".hasPopover").popover({"html": true,"trigger": "hover focus","container": "body"}); 
+	$(".hasPopover").popover({"html": true,"trigger": "hover focus","container": "body"});
+	if (window.toggleSidebar)
+		{
+			toggleSidebar(true);
+		}
+		else
+		{
+			$("#j-toggle-sidebar-header").css("display", "none");
+			$("#j-toggle-button-wrapper").css("display", "none");
+		} 
 });
 
 if (typeof Virtuemart === "undefined")
@@ -24,35 +33,7 @@ Virtuemart.showprices = jQuery(function($) {
     });
 });
 
-Virtuemart.sortable = jQuery(function($) {
 
-    $(document).ready(function(){
-        $( ".adminlist" ).sortable({
-            handle: ".vmicon-16-move",
-            items: 'tr:not(:first,:last)',
-            opacity: 0.8,
-            update: function() {
-                var i = 1;
-                $(function updatenr(){
-                    $('input.ordering').each(function(idx) {
-                        $(this).val(idx);
-                    });
-                });
-
-                $(function updaterows() {
-                    $(".order").each(function(index){
-                        var row = $(this).parent('td').parent('tr').prevAll().length;
-                        $(this).val(row);
-                        i++;
-                    });
-
-                });
-            }
-
-        });
-    });
-
-});
 
 (function ($) {
 	
@@ -166,19 +147,7 @@ Virtuemart.sortable = jQuery(function($) {
 
         },
 
-        toggle:function () {
-            var options = { path:'/', expires:2};
-
-            this.click(function () {
-                $this = $(this);
-                if ($this.parent().hasClass('menu-collapsed')) {
-                    $.cookie('vmmenu', 'show', options);
-                } else {
-                    $.cookie('vmmenu', 'hide', options);
-                }
-				$('.menu-wrapper').toggleClass('menu-collapsed').parent().toggleClass('menu-collapsed').children('.toggler').addClass('menu-collapsed');
-            });
-        },
+        
 
     };
 
@@ -194,6 +163,3 @@ Virtuemart.sortable = jQuery(function($) {
 
     };
 })(jQuery);
-
-// load defaut scripts
-jQuery.noConflict();
