@@ -36,6 +36,8 @@ class VirtueMartModelCoupon extends VmModel {
 	function __construct() {
 		parent::__construct();
 		$this->setMainTable('coupons');
+		$this->addvalidOrderingFieldName(array('coupon_code', 'percent_or_total', 'coupon_type', 'coupon_value', 'coupon_value_valid','coupon_used','virtuemart_coupon_id'));
+
 	}
 
     /**

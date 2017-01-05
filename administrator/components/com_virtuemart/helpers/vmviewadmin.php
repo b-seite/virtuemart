@@ -116,58 +116,8 @@ class VmViewAdmin extends JViewLegacy {
 			$bar->appendButton('Link', 'back', 'COM_VIRTUEMART_LEAVE', 'index.php?option=com_virtuemart&manage=0');
 		}
 
-		$this->addJsJoomlaSubmitButton();
-		// javascript for cookies setting in case of press "APPLY"
 	}
 
-	function addJsJoomlaSubmitButton($validate=false){
-
-		static $done=array(false,false);
-		if(!$done[$validate]){
-			if($validate){
-				vmJsApi::vmValidator();
-				$form = "if( (a=='apply' || a=='save') && myValidator(form,false)){
-				form.submit();
-			} else if(a!='apply' && a!='save'){
-				form.submit();
-			}";
-			} else {
-				$form = "form.submit();";
-			}
-		} else {
-			return $done[$validate];
-		}
-
-		$j = "
-	Joomla.submitbutton=function(a){
-
-		var options = { path: '/', expires: 2}
-		if (a == 'apply') {
-			var idx = jQuery('#tabs li.current').index();
-			jQuery.cookie('vmapply', idx, options);
-		} else {
-			jQuery.cookie('vmapply', '0', options);
-		}
-		jQuery( '#media-dialog' ).remove();
-		form = document.getElementById('adminForm');
-		form.task.value = a;
-		".$form."
-		return false;
-	};
-
-		links = jQuery('a[onclick].toolbar');
-
-		links.each(function(){
-			var onClick = new String(this.onclick);
-			jQuery(this).click(function(e){
-				//console.log('click ');
-				e.stopImmediatePropagation();
-				e.preventDefault();
-			});
-		});";
-		vmJsApi::addJScript('submit', $j,false, true);
-		$done[$validate]=true;
-	}
 
 	/**
 	 * set pagination and filters
@@ -224,15 +174,16 @@ class VmViewAdmin extends JViewLegacy {
 
 		JToolBarHelper::divider();
 		if (vmAccess::manager($view.'.edit')) {
-			JToolBarHelper::save();
 			JToolBarHelper::apply();
+			JToolBarHelper::save();
+			
 		}
 		JToolBarHelper::cancel();
 		self::showHelp();
 		self::showACLPref($view);
 
 		if($view != 'shipmentmethod' and $view != 'paymentmethod' and $view != 'media') $validate = true; else $validate = false;
-		$this->addJsJoomlaSubmitButton($validate);
+		
 
 		$editView = vRequest::getCmd('view',vRequest::getCmd('controller','' ) );
 		$params = JComponentHelper::getParams('com_languages');
@@ -401,7 +352,7 @@ class VmViewAdmin extends JViewLegacy {
 
 		$viewText = vmText::_('COM_VIRTUEMART_' . strtoupper($name));
 
-		$taskName = ' <small><small>[ ' . vmText::_('COM_VIRTUEMART_' . $task) . ' ]</small></small>';
+		$taskName = ' <small> < VirtueMart ' .  vmVersion::$REVISION . ' ></small>';
 
 		JToolBarHelper::title($viewText . ' ' . $taskName . $msg, $icon.' '.$task );
 		$this->assignRef('viewName',$viewText); //was $viewName?
@@ -510,7 +461,7 @@ class VmViewAdmin extends JViewLegacy {
 		if (vmAccess::manager('core')) {
 			JToolBarHelper::divider();
 			$bar = JToolBar::getInstance('toolbar');
-			$bar->appendButton('Link', 'lock', 'JCONFIG_PERMISSIONS_LABEL', 'index.php?option=com_config&amp;view=component&amp;component=com_virtuemart');
+			$bar->appendButton('Link', 'options', 'JTOOLBAR_OPTIONS', 'index.php?option=com_config&amp;view=component&amp;component=com_virtuemart');
 			
 
 		}

@@ -19,11 +19,20 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-AdminUIHelper::startAdminArea($this);
+JHtml::_('behavior.formvalidator');
+
+JHtml::_('bootstrap.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 
 ?>
 
-<form action="index.php?option=com_virtuemart&view=coupon" method="post" name="adminForm" id="adminForm">
+<form action=<?php echo JRoute::_('index.php?option=com_virtuemart&view=coupon'); ?> method="post" name="adminForm" id="adminForm">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo JLayoutHelper::render('sidemenu'); ?>
+	</div>
+	<div id="j-main-container" class="span10">
+
 	<div id="header">
 		<div id="filterbox">
 			<table>
@@ -43,99 +52,102 @@ AdminUIHelper::startAdminArea($this);
 		<div id="resultscounter" ><?php echo $this->pagination->getResultsCounter();?></div>
 	</div>
     <div id="editcell">
-	    <table class="adminlist table table-striped" cellspacing="0" cellpadding="0">
+	    <?php if (empty($this->coupons)) : ?>
+			<div class="alert alert-no-items">
+				<?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+			</div>
+		<?php else : ?>
+	    <table class="table table-striped" id="couponList">
 	    <thead>
 		<tr>
-		    <th class="admin-checkbox">
-			<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" />
+			
+		    <th width="1%" class="center">
+				<?php echo JHtml::_('grid.checkall'); ?>
 		    </th>
 		    <th width="25%">
-			<?php echo vmText::_('COM_VIRTUEMART_COUPON_CODE'); ?>
+			    <?php echo $this->sort('coupon_code','COM_VIRTUEMART_COUPON_CODE'); ?> 
+		    </th>
+		    <th width="10%" class="nowrap hidden-phone">
+			    <?php echo $this->sort('percent_or_total','COM_VIRTUEMART_COUPON_PERCENT_TOTAL'); ?> 
 		    </th>
 		    <th width="16%">
-			<?php echo vmText::_('COM_VIRTUEMART_COUPON_PERCENT_TOTAL'); ?>
+			    <?php echo $this->sort('coupon_type','COM_VIRTUEMART_COUPON_TYPE'); ?> 
 		    </th>
 		    <th width="16%">
-			<?php echo vmText::_('COM_VIRTUEMART_COUPON_TYPE'); ?>
+			    <?php echo $this->sort('coupon_value','COM_VIRTUEMART_VALUE'); ?> 
 		    </th>
-		    <th width="16%">
-			<?php echo vmText::_('COM_VIRTUEMART_VALUE'); ?>
+		    <th min-width="130px" class="nowrap">
+			    <?php echo $this->sort('coupon_value_valid','COM_VIRTUEMART_COUPON_VALUE_VALID_AT'); ?> 
 		    </th>
-		    <th min-width="130px" width="18%">
-			<?php echo vmText::_('COM_VIRTUEMART_COUPON_VALUE_VALID_AT'); ?>
-		    </th>
-			<th min-width="100px" width="18%">
-				<?php echo vmText::_('COM_VIRTUEMART_COUPON_USED'); ?>
+			<th min-width="100px" class="nowrap">
+				<?php echo $this->sort('coupon_used','COM_VIRTUEMART_COUPON_USED'); ?> 
 			</th>
-		     <th><?php echo $this->sort('virtuemart_coupon_id', 'COM_VIRTUEMART_ID')  ?></th>
+		    <th>
+			     <?php echo $this->sort('virtuemart_coupon_id', 'COM_VIRTUEMART_ID')  ?>
+			</th>
 		</tr>
 	    </thead>
+	    <tfoot>
+			<tr>
+				<td colspan="9">
+					<?php echo $this->pagination->getListFooter(); ?>
+				</td>
+			</tr>
+		</tfoot>
 	    <?php
-	    $k = 0;
-	    for ($i=0, $n=count($this->coupons); $i < $n; $i++) {
-		$row = $this->coupons[$i];
-
-		$checked = JHtml::_('grid.id', $i, $row->virtuemart_coupon_id);
-		$editlink = JROUTE::_('index.php?option=com_virtuemart&view=coupon&task=edit&cid[]=' . $row->virtuemart_coupon_id);
+		    $i = 0;
+			$k = 0;
+			foreach ($this->coupons as $key => $coupon) {
+	    
+		$checked = JHtml::_('grid.id', $i, $coupon->virtuemart_coupon_id);
+		$used = $this->toggle($coupon->coupon_used, $i,'toggle.coupon_used','','',TRUE);
+		
+		$editlink = JROUTE::_('index.php?option=com_virtuemart&view=coupon&task=edit&cid[]=' . $coupon->virtuemart_coupon_id);
 		?>
-	    <tr class="row<?php echo $k; ?>">
+	    <tr class="row<?php echo $k; ?>" sortable-group-id="<?php echo $item->catid; ?>">
+		    
 		<td class="admin-checkbox">
 			<?php echo $checked; ?>
 		</td>
-		<td align="left">
-		    <a href="<?php echo $editlink; ?>"><?php echo $row->coupon_code; ?></a>
+		<td class="left">
+		    <a href="<?php echo $editlink; ?>"><?php echo $coupon->coupon_code; ?></a>
 		</td>
 		<td>
-			<?php echo vmText::_('COM_VIRTUEMART_COUPON_'.strtoupper($row->percent_or_total)); ?>
+			<?php echo vmText::_('COM_VIRTUEMART_COUPON_'.strtoupper($coupon->percent_or_total)); ?>
 		</td>
-		<td align="left">
-			<?php echo vmText::_('COM_VIRTUEMART_COUPON_TYPE_'.strtoupper($row->coupon_type)); ?>
+		<td class="left">
+			<?php echo vmText::_('COM_VIRTUEMART_COUPON_TYPE_'.strtoupper($coupon->coupon_type)); ?>
 		</td>
 		<td>
-			<?php echo vmText::_($row->coupon_value); ?>
-		    <?php if ( $row->percent_or_total=='percent') echo '%' ;
+			<?php echo vmText::_($coupon->coupon_value); ?>
+		    <?php if ( $coupon->percent_or_total=='percent') echo '%' ;
 		    else echo $this->vendor_currency;   ?>
 		</td>
-		<td align="left">
-			<?php echo vmText::_($row->coupon_value_valid); ?> <?php echo $this->vendor_currency; ?>
+		<td class="left">
+			<?php echo vmText::_($coupon->coupon_value_valid); 
+			echo $this->vendor_currency; ?>
 		</td>
-		    <td align="center">
+		    <td class="center">
 			    <?php
-			    if( $row->coupon_type=='gift'){
-				    if ($row->coupon_used ) {
-					    echo vmText::_('COM_VIRTUEMART_YES');
-				    } else  {
-					    echo vmText::_('COM_VIRTUEMART_NO');
-				    }
+			    if( $coupon->coupon_type=='gift'){
+				    echo $used; 
 			     }
 			    ?>
 		    </td>
 		<td align="left">
-			<?php echo vmText::_($row->virtuemart_coupon_id); ?>
+			<?php echo vmText::_($coupon->virtuemart_coupon_id); ?>
 		</td>
 	    </tr>
 		<?php
 		$k = 1 - $k;
+		$i++;
 	    }
 	    ?>
-	    <tfoot>
-		<tr>
-		    <td colspan="10">
-			<?php echo $this->pagination->getListFooter(); ?>
-		    </td>
-		</tr>
-	    </tfoot>
+	    
 	</table>
+	<?php endif; ?>
     </div>
 
-    <input type="hidden" name="option" value="com_virtuemart" />
-    <input type="hidden" name="controller" value="coupon" />
-    <input type="hidden" name="view" value="coupon" />
-    <input type="hidden" name="task" value="" />
-    <input type="hidden" name="boxchecked" value="0" />
-    <?php echo JHtml::_( 'form.token' ); ?>
+	<?php echo $this->addStandardHiddenToForm($this->_name); ?>	
+</div>
 </form>
-
-
-
-<?php AdminUIHelper::endAdminArea(); ?>
