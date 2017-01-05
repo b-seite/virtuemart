@@ -1,5 +1,4 @@
 <?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
 *
 * @version $Id: admin.virtuemart.php 7256 2013-09-29 18:42:44Z Milbo $
@@ -16,13 +15,20 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 * http://virtuemart.net
 */
 
-if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
+defined( '_JEXEC' ) or die( 'Restricted access' );
+
+JHtml::_('behavior.tabstate');
+
+if (!JFactory::getUser()->authorise('core.manage', 'com_virtuemart'))
+{
+	throw new JAccessExceptionNotallowed(JText::_('JERROR_ALERTNOAUTHOR'), 403);
+}
+
+JLoader::register('VmConfig', __DIR__ . '/helpers/config.php');
 VmConfig::loadConfig();
 
-//VmConfig::showDebug('all');
-
-if (!class_exists( 'VmController' )) require(VMPATH_ADMIN .'/helpers/vmcontroller.php');
-if (!class_exists( 'VmModel' )) require(VMPATH_ADMIN .'/helpers/vmmodel.php');
+JLoader::register('VmController', __DIR__ . '/helpers/vmcontroller.php');
+JLoader::register('VmModel', __DIR__ . '/helpers/vmmodel.php');
 
 vmRam('Start');
 vmSetStartTime('vmStart');
@@ -31,8 +37,7 @@ $_controller = vRequest::getCmd('view', vRequest::getCmd('controller', 'virtuema
 
 VmConfig::loadJLang('com_virtuemart');
 $exe = true;
-//VmConfig::$echoDebug=true;
-// Require specific controller if requested
+
 if($_controller) {
 	if (file_exists(VMPATH_ADMIN .'/controllers/'.$_controller.'.php')) {
 		// Only if the file exists, since it might be a Joomla view we're requesting...
