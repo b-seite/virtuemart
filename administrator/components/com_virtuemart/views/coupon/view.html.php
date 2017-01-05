@@ -34,6 +34,12 @@ if(!class_exists('VmViewAdmin'))require(VMPATH_ADMIN.DS.'helpers'.DS.'vmviewadmi
 
 
 class VirtuemartViewCoupon extends VmViewAdmin {
+	
+	protected $items;
+
+	protected $pagination;
+
+	protected $state;
 
 	function display($tpl = null) {
 
@@ -47,7 +53,8 @@ class VirtuemartViewCoupon extends VmViewAdmin {
 
 		$coupon = $model->getCoupon();
 		$this->SetViewTitle('', $coupon->coupon_code, 'cube');
-
+		
+		$this->state         = $this->get('State');
 
 		$layoutName = vRequest::getCmd('layout', 'default');
 
@@ -106,11 +113,7 @@ class VirtuemartViewCoupon extends VmViewAdmin {
 
 			$this->pagination = $model->getPagination();
 
-		}
-			//JToolBarHelper
-			//$bar = JToolbar::getInstance('toolbar');
-			//echo '<div class="toolbar-box" style="height: 84px;position: relative;">' . $bar->render().'</div>';
-		
+		}		
 
 		parent::display($tpl);
 	}

@@ -19,7 +19,7 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-AdminUIHelper::startAdminArea($this);
+//AdminUIHelper::startAdminArea($this);
 $editor = JFactory::getEditor();
 
 ?>
@@ -37,4 +37,4 @@ AdminUIHelper::buildTabs ( $this, array (	'categoryform' 	=> 	'COM_VIRTUEMART_CA
 
 </form>
 
-<?php AdminUIHelper::endAdminArea(); ?>
+<?php //AdminUIHelper::endAdminArea(); ?>

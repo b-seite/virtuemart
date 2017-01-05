@@ -19,11 +19,20 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-AdminUIHelper::startAdminArea($this);
+JHtml::_('behavior.formvalidator');
+
+JHtml::_('bootstrap.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 
 ?>
 
 <form action="index.php?option=com_virtuemart&view=shoppergroup" method="post" name="adminForm" id="adminForm">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo JLayoutHelper::render('sidemenu'); ?>
+	</div>
+	<div id="j-main-container" class="span10">
+
 <?php if ($this->task=='massxref_sgrps' or $this->task=='massxref_sgrps_exe') : ?>
 <div id="header">
 <div id="massxref_task">
@@ -141,5 +150,5 @@ AdminUIHelper::startAdminArea($this);
   </div>
 
 	<?php echo $this->addStandardHiddenToForm($this->_name,$this->task); ?>
-</form><?php
-AdminUIHelper::endAdminArea(); ?>
+	</div>
+</form>

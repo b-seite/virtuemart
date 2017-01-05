@@ -27,13 +27,38 @@ JFactory::getDocument()->addScriptDeclaration('
 		<?php echo JLayoutHelper::render('joomla.sidebars.toggle'); ?>
 	</div>
 	<div id="sidebar" class="sidebar">
+		<a href="index.php?option=com_virtuemart&amp;view=virtuemart" ><img src="<?php echo JURI::root(true).'/administrator/components/com_virtuemart/assets/images/vm_menulogo.png'?>"></a>
+		<div class="sidebar-nav">
 	<?php
-		
+		$input = JFactory::getApplication()->input;
 		$moduleId = vRequest::getInt ( 'module_id', 0 );
 		
 		$menuItems = _getAdminMenu ( $moduleId ); 
+		
+		$modCount = 1;
+		foreach ( $menuItems as $item ) {
+
+			foreach ( $item ['items'] as $link ) {
+				$target='';
+				if ($link ['name'] == '-') {
+					// it was emtpy before
+				} else {
+					if (strncmp ( $link ['link'], 'http', 4 ) === 0) {
+						
+					} else {
+						
+						if ($link ['view'] == $input->get('view')) {
+							$actviveSlide = 'slide'.$modCount.'_id'; 
+						}
+					}
+					
+				}
+			}
+				$modCount ++;
+		}
+		
 				
-		echo JHtml::_('bootstrap.startAccordion', 'admin-ui-menu', array("toggle" => FALSE));
+		echo JHtml::_('bootstrap.startAccordion', 'admin-ui-menu', array("toggle" => FALSE, 'parent'=>'admin-ui-menu', 'active' => $actviveSlide));
 		
 		$modCount = 1;
 		foreach ( $menuItems as $item ) {
@@ -53,11 +78,15 @@ JFactory::getDocument()->addScriptDeclaration('
 						$url .= $link ['task'] ? "&task=" . $link ['task'] : '';
 						
 						$url = vRequest::vmSpecialChars($url);
+						$active = '';
+						if ($link ['view'] == $input->get('view')) {
+							$active='class="active" '; 
+						}
 					}
 
 					
 						$html .= '
-					<li>
+					<li '. $active . '>
 						<a href="'.$url.'" '.$target.'>
 							<span class="vmicon-wrapper"><span class="'.$link ['icon_class'].'"></span></span>
 							<span class="menu-subtitle">'. vmText::_ ( $link ['name'] ).'</span>
@@ -79,6 +108,7 @@ JFactory::getDocument()->addScriptDeclaration('
 		
 		</div>
 	</div>
+</div>
 	<div id="j-toggle-sidebar"></div>
 </div>
 
